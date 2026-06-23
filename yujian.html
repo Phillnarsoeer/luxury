@@ -3,8 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>郁见 — AI 法律咨询</title>
+<title>郁见 — 一站式法律服务平台</title>
 <style>
+/* ═══════════════════════════════════════════════════════
+   CSS Variables & Reset
+   ═══════════════════════════════════════════════════════ */
 :root {
   --bg: #ffffff;
   --surface: #f8f9fa;
@@ -19,8 +22,11 @@
   --red: #ea4335;
   --amber: #f9ab00;
   --green: #34a853;
+  --teal: #007b83;
+  --purple: #7c3aed;
   --shadow-sm: 0 1px 2px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.1);
   --shadow: 0 1px 3px rgba(60,64,67,.15), 0 4px 8px 3px rgba(60,64,67,.1);
+  --shadow-lg: 0 8px 24px rgba(60,64,67,.2);
   --radius: 24px;
   --radius-sm: 12px;
   --radius-xs: 8px;
@@ -29,7 +35,6 @@
 
 * { margin:0; padding:0; box-sizing:border-box; }
 html, body { height:100%; -webkit-tap-highlight-color:transparent; }
-
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   background: var(--bg);
@@ -39,60 +44,153 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Top Bar ─────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════
+   Top Navigation Bar
+   ═══════════════════════════════════════════════════════ */
 .topbar {
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding: 12px 20px;
+  padding: 8px 16px;
   border-bottom: 1px solid var(--border);
   background: var(--bg);
-  gap: 12px;
+  gap: 8px;
   position:sticky;
   top:0;
   z-index:10;
 }
 .logo {
-  font-size: 20px;
-  font-weight: 500;
-  letter-spacing: 4px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 3px;
   color: var(--text);
+  display:flex;
+  align-items:center;
+  gap: 6px;
+  cursor:pointer;
+  flex-shrink:0;
+}
+.logo-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+.nav-tabs {
+  display:flex;
+  gap: 2px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  mask-image: linear-gradient(to right, #000 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, #000 90%, transparent);
+}
+.nav-tabs::-webkit-scrollbar { display:none; }
+.nav-tab {
+  padding: 7px 14px;
+  border:none;
+  border-radius: 20px;
+  background: transparent;
+  font-size: 13px;
+  color: var(--text2);
+  cursor:pointer;
+  transition: all var(--transition);
+  white-space:nowrap;
+  font-family: inherit;
+  font-weight: 500;
+}
+.nav-tab:hover { background: var(--surface2); }
+.nav-tab.active {
+  background: var(--primary-light);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Main Content Area
+   ═══════════════════════════════════════════════════════ */
+main {
+  flex:1;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+}
+.tab-content { display:none; flex:1; }
+.tab-content.active { display:flex; flex-direction:column; }
+
+/* ═══════════════════════════════════════════════════════
+   HOME PAGE
+   ═══════════════════════════════════════════════════════ */
+.hero {
+  background: linear-gradient(135deg, var(--primary-light) 0%, #f0f7ff 50%, var(--bg) 100%);
+  padding: 40px 24px 32px;
+  text-align:center;
+}
+.hero h1 { font-size: 40px; font-weight: 300; letter-spacing: 10px; margin-bottom: 8px; }
+.hero .subtitle { font-size: 14px; color: var(--text2); line-height: 1.8; max-width: 560px; margin: 0 auto; }
+.hero .badge-row { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:16px; }
+.hero .badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--bg);
+  color: var(--primary);
+  border: 1px solid var(--primary-light);
+}
+
+.feature-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  padding: 20px 24px;
+  max-width: 960px;
+  margin:0 auto;
+  width:100%;
+}
+.feature-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 20px 16px;
+  cursor:pointer;
+  transition: all var(--transition);
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap: 8px;
+}
+.feature-card:hover {
+  box-shadow: var(--shadow);
+  border-color: transparent;
+  transform: translateY(-2px);
+}
+.feature-card .icon { font-size: 32px; }
+.feature-card .title { font-size: 14px; font-weight: 600; }
+.feature-card .desc { font-size: 11px; color: var(--text3); line-height: 1.5; }
+
+.announce {
+  max-width: 960px;
+  margin:0 auto 24px;
+  padding:0 24px;
+  width:100%;
+}
+.announce-card {
+  background: #fef7e0;
+  border: 1px solid #feefc3;
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 12px;
+  color: #5f4b00;
   display:flex;
   align-items:center;
   gap: 8px;
 }
-.logo-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: var(--primary);
-}
-.role-select {
-  display:flex;
-  gap: 4px;
-  background: var(--surface2);
-  border-radius: 20px;
-  padding: 3px;
-}
-.role-select button {
-  padding: 6px 14px;
-  border: none;
-  border-radius: 18px;
-  background: transparent;
-  font-size: 13px;
-  color: var(--text2);
-  cursor: pointer;
-  transition: all var(--transition);
-  white-space: nowrap;
-  font-family: inherit;
-}
-.role-select button.active {
-  background: var(--bg);
-  color: var(--primary);
-  box-shadow: var(--shadow-sm);
-  font-weight: 500;
-}
+.announce-card a { color: var(--primary-dark); font-weight: 500; }
 
-/* ── Chat Area ───────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════
+   CHAT (existing, enhanced)
+   ═══════════════════════════════════════════════════════ */
 .chat {
   flex:1;
   overflow-y:auto;
@@ -105,7 +203,6 @@ body {
 @media (min-width: 768px) { .chat { padding: 24px 48px; } }
 @media (min-width: 1024px) { .chat { padding: 28px 120px; } }
 
-/* Welcome */
 .welcome {
   flex:1;
   display:flex;
@@ -114,25 +211,9 @@ body {
   text-align:center;
 }
 .welcome-box { max-width: 480px; padding: 20px; }
-.welcome-box h1 {
-  font-size: 32px;
-  font-weight: 400;
-  letter-spacing: 8px;
-  margin-bottom: 8px;
-  color: var(--text);
-}
-.welcome-box .sub {
-  font-size: 14px;
-  color: var(--text2);
-  line-height: 1.7;
-  margin-bottom: 28px;
-}
-.quick-chips {
-  display:flex;
-  flex-wrap:wrap;
-  gap: 8px;
-  justify-content:center;
-}
+.welcome-box h1 { font-size: 32px; font-weight: 400; letter-spacing: 8px; margin-bottom: 8px; }
+.welcome-box .sub { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 28px; }
+.quick-chips { display:flex; flex-wrap:wrap; gap: 8px; justify-content:center; }
 .chip {
   padding: 10px 18px;
   border: 1px solid var(--border);
@@ -144,165 +225,289 @@ body {
   transition: all var(--transition);
   font-family: inherit;
 }
-.chip:hover {
-  background: var(--primary-light);
-  border-color: transparent;
-  color: var(--primary);
+.chip:hover { background: var(--primary-light); border-color: transparent; color: var(--primary); }
+
+.role-select {
+  display:flex;
+  gap: 4px;
+  background: var(--surface2);
+  border-radius: 20px;
+  padding: 3px;
 }
+.role-select button {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 18px;
+  background: transparent;
+  font-size: 12px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+  font-family: inherit;
+  font-weight: 500;
+}
+.role-select button.active { background: var(--bg); color: var(--primary); box-shadow: var(--shadow-sm); }
 
 /* Messages */
-.msg {
-  display:flex;
-  gap: 12px;
-  animation: slideUp .3s ease;
-  max-width: 760px;
-}
-@keyframes slideUp {
-  from { opacity:0; transform:translateY(12px); }
-  to { opacity:1; transform:translateY(0); }
-}
+.msg { display:flex; gap: 12px; animation: slideUp .3s ease; max-width: 760px; }
+@keyframes slideUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
 .msg.user { flex-direction:row-reverse; align-self:flex-end; }
 .msg.assistant { align-self:flex-start; }
-
-.msg .avatar {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size: 15px;
-  flex-shrink:0;
-  margin-top: 2px;
-}
+.msg .avatar { width: 32px; height: 32px; border-radius: 50%; display:flex; align-items:center; justify-content:center; font-size: 15px; flex-shrink:0; margin-top: 2px; }
 .msg.user .avatar { background: var(--primary); color:#fff; }
 .msg.assistant .avatar { background: var(--surface2); }
-
 .msg .body { flex:1; min-width:0; }
-.msg .bubble {
-  padding: 12px 16px;
-  border-radius: 18px;
-  font-size: 14px;
-  line-height: 1.65;
-  word-break: break-word;
-}
-.msg.user .bubble {
-  background: var(--primary-light);
-  color: var(--text);
-  border-bottom-right-radius: 6px;
-}
-.msg.assistant .bubble {
-  background: var(--surface);
-  border-bottom-left-radius: 6px;
-}
+.msg .bubble { padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.65; word-break: break-word; }
+.msg.user .bubble { background: var(--primary-light); color: var(--text); border-bottom-right-radius: 6px; }
+.msg.assistant .bubble { background: var(--surface); border-bottom-left-radius: 6px; }
 .msg .bubble p { margin: 6px 0; }
-.msg .bubble h1, .msg .bubble h2, .msg .bubble h3 {
-  margin: 14px 0 6px;
-  font-weight: 500;
-  font-size: 15px;
-}
+.msg .bubble h1, .msg .bubble h2, .msg .bubble h3 { margin: 14px 0 6px; font-weight: 500; font-size: 15px; }
 .msg .bubble ul, .msg .bubble ol { padding-left: 20px; margin: 8px 0; }
 .msg .bubble li { margin: 4px 0; }
-.msg .bubble code {
-  background: rgba(0,0,0,.06);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 13px;
-}
-.msg .bubble pre {
-  background: #1e1e1e;
-  color: #d4d4d4;
-  padding: 12px;
-  border-radius: var(--radius-xs);
-  overflow-x:auto;
-  margin: 10px 0;
-  font-size: 13px;
-}
-.msg .bubble blockquote {
-  border-left: 3px solid var(--primary);
-  padding-left: 12px;
-  color: var(--text2);
-  margin: 10px 0;
-}
+.msg .bubble code { background: rgba(0,0,0,.06); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+.msg .bubble pre { background: #1e1e1e; color: #d4d4d4; padding: 12px; border-radius: var(--radius-xs); overflow-x:auto; margin: 10px 0; font-size: 13px; }
+.msg .bubble blockquote { border-left: 3px solid var(--primary); padding-left: 12px; color: var(--text2); margin: 10px 0; }
 .msg .bubble strong { font-weight: 600; }
 .msg .bubble hr { border:none; border-top:1px solid var(--border); margin: 14px 0; }
-
-.tag {
-  display:inline-flex;
-  align-items:center;
-  gap: 4px;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 500;
-  margin-top: 6px;
-  background: var(--primary-light);
-  color: var(--primary-dark);
-}
+.tag { display:inline-flex; align-items:center; gap: 4px; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; margin-top: 6px; background: var(--primary-light); color: var(--primary-dark); }
 .tag.warn { background: #fef7e0; color: #e37400; }
 
-/* ── Input ──────────────────────────────────────── */
-.input-bar {
-  padding: 12px 16px 24px;
-  background: var(--bg);
-}
-.input-wrap {
-  max-width: 760px;
-  margin:0 auto;
+.chat-top-row {
   display:flex;
-  align-items:flex-end;
-  gap: 8px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 6px 8px 6px 18px;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding: 0 0 12px;
+  flex-wrap:wrap;
+}
+
+.input-bar { padding: 12px 16px 24px; background: var(--bg); }
+.input-wrap {
+  max-width: 760px; margin:0 auto;
+  display:flex; align-items:flex-end; gap: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 6px 8px 6px 18px;
   transition: all var(--transition);
 }
-.input-wrap:focus-within {
-  border-color: transparent;
-  box-shadow: var(--shadow);
-  background: var(--bg);
-}
+.input-wrap:focus-within { border-color: transparent; box-shadow: var(--shadow); background: var(--bg); }
 .input-wrap textarea {
-  flex:1;
-  border:none;
-  outline:none;
-  resize:none;
-  font-size: 15px;
-  font-family: inherit;
-  background: transparent;
-  padding: 8px 0;
-  line-height: 1.5;
-  max-height: 140px;
-  color: var(--text);
+  flex:1; border:none; outline:none; resize:none; font-size: 15px;
+  font-family: inherit; background: transparent; padding: 8px 0;
+  line-height: 1.5; max-height: 140px; color: var(--text);
 }
 .input-wrap textarea::placeholder { color: var(--text3); }
 .send-btn {
-  width: 40px; height: 40px;
-  border:none;
-  border-radius: 50%;
-  background: var(--primary);
-  color:#fff;
-  cursor:pointer;
-  font-size: 16px;
-  transition: all var(--transition);
-  flex-shrink:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  width: 40px; height: 40px; border:none; border-radius: 50%;
+  background: var(--primary); color:#fff; cursor:pointer; font-size: 16px;
+  transition: all var(--transition); flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
 }
 .send-btn:hover { background: var(--primary-dark); }
 .send-btn:disabled { background: var(--border); color: var(--text3); cursor:default; }
-.input-hint {
-  text-align:center;
-  font-size: 11px;
-  color: var(--text3);
-  margin-top: 8px;
-  max-width: 760px;
-  margin-inline: auto;
+.input-hint { text-align:center; font-size: 11px; color: var(--text3); margin-top: 8px; max-width: 760px; margin-inline: auto; }
+
+/* ═══════════════════════════════════════════════════════
+   EXAM MODULE
+   ═══════════════════════════════════════════════════════ */
+.exam-wrap { padding: 20px 24px; max-width: 860px; margin:0 auto; width:100%; flex:1; }
+.exam-header { display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin-bottom: 18px; }
+.exam-subject-select {
+  display:flex; gap: 4px; flex-wrap:wrap;
+}
+.exam-subject-select button {
+  padding: 6px 12px; border: 1px solid var(--border); border-radius: 16px;
+  background: var(--bg); font-size: 12px; cursor:pointer; font-family: inherit;
+  transition: all var(--transition); color: var(--text2);
+}
+.exam-subject-select button.active { background: var(--primary); color:#fff; border-color: var(--primary); }
+.exam-stats { display:flex; gap:16px; font-size: 12px; color: var(--text2); flex-wrap:wrap; }
+.exam-stats span strong { color: var(--text); }
+
+.question-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.question-card .q-type {
+  display:inline-block;
+  padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600;
+  margin-bottom: 12px;
+}
+.q-type.single { background: #e8f5e9; color: #2e7d32; }
+.q-type.multi { background: #fce4ec; color: #c62828; }
+.question-card .q-title { font-size: 15px; font-weight: 500; line-height: 1.7; margin-bottom: 16px; }
+.option-list { display:flex; flex-direction:column; gap: 8px; }
+.option-item {
+  display:flex; align-items:center; gap: 10px;
+  padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-xs);
+  cursor:pointer; transition: all var(--transition); font-size: 14px;
+}
+.option-item:hover { background: var(--surface); }
+.option-item.selected { border-color: var(--primary); background: var(--primary-light); }
+.option-item.correct { border-color: var(--green); background: #e8f5e9; }
+.option-item.wrong { border-color: var(--red); background: #fce4ec; }
+.option-item.disabled { pointer-events:none; }
+.option-letter { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); display:flex; align-items:center; justify-content:center; font-weight: 600; font-size: 13px; flex-shrink:0; }
+.option-item.selected .option-letter { background: var(--primary); color:#fff; border-color: var(--primary); }
+.option-item.correct .option-letter { background: var(--green); color:#fff; border-color: var(--green); }
+.option-item.wrong .option-letter { background: var(--red); color:#fff; border-color: var(--red); }
+.explanation-box {
+  margin-top: 14px; padding: 14px; border-radius: var(--radius-xs);
+  background: var(--surface); font-size: 13px; line-height: 1.7; display:none;
+}
+.explanation-box.show { display:block; }
+.explanation-box .exp-title { font-weight: 600; margin-bottom: 6px; }
+.explanation-box .exp-correct { color: var(--green); font-weight: 600; }
+.explanation-box .exp-wrong { color: var(--red); font-weight: 500; }
+.exam-actions { display:flex; gap: 8px; margin-top: 14px; flex-wrap:wrap; }
+.exam-btn {
+  padding: 8px 20px; border: 1px solid var(--border); border-radius: 20px;
+  background: var(--bg); font-size: 13px; cursor:pointer; font-family: inherit;
+  transition: all var(--transition); font-weight: 500;
+}
+.exam-btn:hover { background: var(--surface); }
+.exam-btn.primary { background: var(--primary); color:#fff; border-color: var(--primary); }
+.exam-btn.primary:hover { background: var(--primary-dark); }
+.exam-btn:disabled { opacity:.5; cursor:default; }
+.wrong-book-section { margin-top: 24px; }
+.wrong-book-section h3 { font-size: 16px; margin-bottom: 12px; }
+
+/* ═══════════════════════════════════════════════════════
+   LAW LIBRARY MODULE
+   ═══════════════════════════════════════════════════════ */
+.library-wrap { padding: 20px 24px; max-width: 960px; margin:0 auto; width:100%; flex:1; }
+.lib-search-wrap {
+  display:flex; gap: 8px; margin-bottom: 16px; flex-wrap:wrap;
+}
+.lib-search {
+  flex:1; min-width: 200px; padding: 10px 16px;
+  border: 1px solid var(--border); border-radius: 24px;
+  font-size: 14px; font-family: inherit; outline:none;
+  transition: all var(--transition);
+}
+.lib-search:focus { border-color: var(--primary); box-shadow: var(--shadow-sm); }
+.lib-cats { display:flex; gap: 4px; flex-wrap:wrap; margin-bottom: 16px; }
+.lib-cat {
+  padding: 5px 14px; border: 1px solid var(--border); border-radius: 16px;
+  font-size: 12px; cursor:pointer; font-family: inherit; background: var(--bg);
+  transition: all var(--transition); white-space:nowrap; color: var(--text2);
+}
+.lib-cat.active { background: var(--primary); color:#fff; border-color: var(--primary); }
+.lib-count { font-size: 12px; color: var(--text3); margin-bottom: 12px; }
+.law-list { display:flex; flex-direction:column; gap: 6px; }
+.law-item {
+  padding: 12px 16px; border: 1px solid var(--border); border-radius: var(--radius-xs);
+  cursor:pointer; transition: all var(--transition); display:flex; justify-content:space-between; align-items:center;
+}
+.law-item:hover { background: var(--surface); border-color: var(--primary); }
+.law-item .law-name { font-size: 14px; font-weight: 500; }
+.law-item .law-meta { font-size: 11px; color: var(--text3); white-space:nowrap; margin-left:12px; }
+.law-detail-overlay {
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:50;
+  align-items:center; justify-content:center;
+}
+.law-detail-overlay.show { display:flex; }
+.law-detail {
+  background: var(--bg); border-radius: var(--radius-sm); max-width: 600px;
+  width:90%; max-height:80vh; overflow-y:auto; padding: 24px; position:relative;
+}
+.law-detail h3 { font-size: 18px; margin-bottom: 8px; }
+.law-detail .law-info { font-size: 12px; color: var(--text3); margin-bottom: 14px; }
+.law-detail .law-body { font-size: 13px; line-height: 1.8; }
+.law-detail .close-detail {
+  position:sticky; top:0; float:right; border:none; background:var(--surface2);
+  width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:16px;
+  display:flex; align-items:center; justify-content:center;
 }
 
-/* ── Disclaimer ──────────────────────────────────── */
-.disclaimer-bar {
+/* ═══════════════════════════════════════════════════════
+   CASE SEARCH MODULE
+   ═══════════════════════════════════════════════════════ */
+.case-wrap { padding: 20px 24px; max-width: 960px; margin:0 auto; width:100%; flex:1; }
+.case-search-wrap {
+  display:flex; gap: 8px; margin-bottom: 16px; flex-wrap:wrap;
+}
+.case-search {
+  flex:1; min-width: 200px; padding: 10px 16px;
+  border: 1px solid var(--border); border-radius: 24px;
+  font-size: 14px; font-family: inherit; outline:none;
+  transition: all var(--transition);
+}
+.case-search:focus { border-color: var(--primary); box-shadow: var(--shadow-sm); }
+.case-cats { display:flex; gap: 4px; flex-wrap:wrap; margin-bottom: 14px; }
+.case-cat {
+  padding: 5px 14px; border: 1px solid var(--border); border-radius: 16px;
+  font-size: 12px; cursor:pointer; font-family: inherit; background: var(--bg);
+  transition: all var(--transition); white-space:nowrap; color: var(--text2);
+}
+.case-cat.active { background: var(--primary); color:#fff; border-color: var(--primary); }
+.case-list { display:flex; flex-direction:column; gap: 8px; }
+.case-item {
+  padding: 14px 16px; border:1px solid var(--border); border-radius: var(--radius-xs);
+  cursor:pointer; transition: all var(--transition);
+}
+.case-item:hover { box-shadow: var(--shadow-sm); border-color: var(--primary); }
+.case-item .case-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.case-item .case-meta { font-size: 11px; color: var(--text3); display:flex; gap: 12px; flex-wrap:wrap; }
+.case-detail-overlay {
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:50;
+  align-items:center; justify-content:center;
+}
+.case-detail-overlay.show { display:flex; }
+.case-detail {
+  background: var(--bg); border-radius: var(--radius-sm); max-width: 700px;
+  width:90%; max-height:80vh; overflow-y:auto; padding: 24px; position:relative;
+}
+.case-detail h3 { font-size: 18px; margin-bottom: 8px; }
+.case-detail .cd-section { margin-bottom: 14px; }
+.case-detail .cd-section h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: var(--primary-dark); }
+.case-detail .cd-section p { font-size: 13px; line-height: 1.7; color: var(--text2); }
+.case-detail .close-detail {
+  position:sticky; top:0; float:right; border:none; background:var(--surface2);
+  width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:16px;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* ═══════════════════════════════════════════════════════
+   TOOLS MODULE
+   ═══════════════════════════════════════════════════════ */
+.tools-wrap { padding: 20px 24px; max-width: 960px; margin:0 auto; width:100%; flex:1; }
+.tools-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.tool-card {
+  background: var(--bg); border:1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 20px;
+}
+.tool-card h3 { font-size: 16px; margin-bottom: 12px; }
+.tool-card .tool-form { display:flex; flex-direction:column; gap: 8px; }
+.tool-card input, .tool-card select {
+  padding: 8px 12px; border:1px solid var(--border); border-radius: var(--radius-xs);
+  font-size: 13px; font-family: inherit;
+}
+.tool-card .tool-result {
+  margin-top: 8px; padding: 10px; background: var(--primary-light);
+  border-radius: var(--radius-xs); font-size: 13px; line-height: 1.7; display:none;
+}
+.tool-card .tool-result.show { display:block; }
+.tool-btn {
+  padding: 8px 16px; border:none; border-radius: 20px;
+  background: var(--primary); color:#fff; cursor:pointer;
+  font-size: 13px; font-family: inherit; font-weight: 500; transition: all var(--transition);
+}
+.tool-btn:hover { background: var(--primary-dark); }
+.aid-list { display:flex; flex-direction:column; gap: 6px; }
+.aid-item {
+  padding: 10px 14px; border:1px solid var(--border); border-radius: var(--radius-xs);
+  font-size: 13px; display:flex; justify-content:space-between; align-items:center;
+}
+.aid-item .aid-name { font-weight: 500; }
+
+/* ═══════════════════════════════════════════════════════
+   FOOTER & SHARED
+   ═══════════════════════════════════════════════════════ */
+.footer-bar {
   background: var(--surface2);
   border-top: 1px solid var(--border);
   padding: 8px 16px;
@@ -315,42 +520,9 @@ body {
   gap: 16px;
   flex-wrap:wrap;
 }
-.disclaimer-bar a { color: var(--primary); text-decoration: none; }
-.disclaimer-bar a:hover { text-decoration:underline; }
+.footer-bar a { color: var(--primary); text-decoration: none; cursor:pointer; }
+.footer-bar a:hover { text-decoration:underline; }
 
-/* ── Drawer ──────────────────────────────────────── */
-.overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:20; }
-.overlay.show { display:block; }
-.drawer {
-  position:fixed;
-  right:-100%;
-  top:0; bottom:0;
-  width:min(360px, 85vw);
-  background: var(--bg);
-  z-index:30;
-  transition: right .3s cubic-bezier(.4,0,.2,1);
-  padding: 24px 20px;
-  overflow-y:auto;
-  box-shadow: 0 2px 6px 2px rgba(60,64,67,.15), 0 12px 24px rgba(60,64,67,.15);
-  display:flex; flex-direction:column; gap: 20px;
-}
-.drawer.show { right:0; }
-.drawer h3 { font-size: 15px; font-weight: 500; margin-bottom: 8px; }
-.drawer p, .drawer li { font-size: 13px; color: var(--text2); line-height: 1.7; }
-.drawer ul { padding-left: 18px; }
-.drawer .close-btn {
-  align-self:flex-end;
-  width: 32px; height: 32px;
-  border: none; border-radius: 50%;
-  background: var(--surface2);
-  cursor: pointer;
-  font-size: 16px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-/* ── Toast ──────────────────────────────────────── */
 .toast {
   position:fixed;
   bottom: 100px;
@@ -362,166 +534,448 @@ body {
   border-radius: 20px;
   font-size: 13px;
   z-index:40;
-  animation: toastIn .3s ease, toastOut .3s ease 2.5s forwards;
+  animation: toastIn .3s ease, toastOut .3s ease 2s forwards;
   pointer-events:none;
 }
 @keyframes toastIn { from { opacity:0; transform:translateX(-50%) translateY(10px); } }
 @keyframes toastOut { to { opacity:0; transform:translateX(-50%) translateY(10px); } }
 
-/* ── Responsive ──────────────────────────────────── */
+.scroll-top {
+  position:fixed; bottom:80px; right:20px; z-index:20;
+  width:40px; height:40px; border:none; border-radius:50%;
+  background: var(--bg); box-shadow: var(--shadow);
+  cursor:pointer; font-size:18px; display:none;
+  align-items:center; justify-content:center;
+}
+.scroll-top.show { display:flex; }
+
 @media (max-width: 600px) {
-  .topbar { padding: 10px 14px; }
-  .logo { font-size: 17px; letter-spacing: 2px; }
-  .role-select button { padding: 5px 10px; font-size: 11px; }
+  .topbar { padding: 8px 10px; }
+  .logo { font-size: 15px; letter-spacing: 2px; }
+  .nav-tab { padding: 5px 10px; font-size: 11px; }
+  .hero h1 { font-size: 30px; }
+  .feature-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 16px; }
+  .feature-card { padding: 14px 10px; }
+  .feature-card .icon { font-size: 24px; }
+  .feature-card .title { font-size: 12px; }
+  .exam-wrap, .library-wrap, .case-wrap, .tools-wrap { padding: 14px; }
   .chat { padding: 14px; gap: 14px; }
   .msg .bubble { font-size: 13px; padding: 10px 14px; }
   .input-bar { padding: 8px 10px 16px; }
-  .disclaimer-bar { font-size: 10px; gap: 8px; }
+  .footer-bar { font-size: 10px; gap: 8px; }
 }
 </style>
 </head>
 <body>
 
-<!-- ── Topbar ────────────────────────────────────── -->
+<!-- ═══════════════════════════════════════════════════════
+   TOP NAVIGATION BAR
+   ═══════════════════════════════════════════════════════ -->
 <header class="topbar">
-  <div class="logo"><span class="logo-dot"></span>郁见</div>
-  <div class="role-select" id="roleSelect">
-    <button class="active" data-role="general_public">公众</button>
-    <button data-role="law_student">法学生</button>
-    <button data-role="legal_professional">法律人</button>
-  </div>
-  <button onclick="openDrawer()" style="border:none;background:none;font-size:20px;cursor:pointer;color:var(--text2);padding:4px;" aria-label="关于">ⓘ</button>
+  <div class="logo" onclick="switchTab('home')"><span class="logo-dot"></span>郁见</div>
+  <nav class="nav-tabs" id="navTabs">
+    <button class="nav-tab active" data-tab="home">首页</button>
+    <button class="nav-tab" data-tab="chat">AI对话</button>
+    <button class="nav-tab" data-tab="exam">法考题库</button>
+    <button class="nav-tab" data-tab="library">法律文库</button>
+    <button class="nav-tab" data-tab="cases">案例查找</button>
+    <button class="nav-tab" data-tab="tools">工具箱</button>
+  </nav>
 </header>
 
-<!-- ── Chat ───────────────────────────────────────── -->
-<div class="chat" id="chat">
-  <div class="welcome" id="welcomeScreen">
-    <div class="welcome-box">
-      <h1>郁 见</h1>
-      <p class="sub">
-        AI 法律咨询助手<br>
-        基于大创项目「AI法律工具失效模式与规制路径研究」<br>
-        深知局限，如实标注
-      </p>
-      <div class="quick-chips">
-        <button class="chip" onclick="quickAsk('被拖欠工资应该怎么维权？')">💰 劳动维权</button>
-        <button class="chip" onclick="quickAsk('民间借贷利息超过多少不受法律保护？')">📋 民间借贷</button>
-        <button class="chip" onclick="quickAsk('离婚时财产如何分割？')">💔 婚姻财产</button>
-        <button class="chip" onclick="quickAsk('遭遇网络诈骗应该怎么办？')">🔒 网络诈骗</button>
-        <button class="chip" onclick="quickAsk('轻微交通事故如何处理？')">🚗 交通事故</button>
-        <button class="chip" onclick="quickAsk('租房合同纠纷怎么解决？')">🏠 租房纠纷</button>
+<!-- ═══════════════════════════════════════════════════════
+   MAIN CONTENT
+   ═══════════════════════════════════════════════════════ -->
+<main id="mainContent">
+
+<!-- ── TAB: HOME ──────────────────────────────────── -->
+<section class="tab-content active" id="tab-home">
+  <div class="hero">
+    <h1>郁 见</h1>
+    <p class="subtitle">
+      一站式法律服务平台<br>
+      基于大创项目「AI法律工具失效模式与规制路径研究」<br>
+      深知局限，如实标注
+    </p>
+    <div class="badge-row">
+      <span class="badge">AI法律咨询</span>
+      <span class="badge">法考题库</span>
+      <span class="badge">法律文库</span>
+      <span class="badge">案例检索</span>
+      <span class="badge">工具集</span>
+    </div>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-card" onclick="switchTab('chat')">
+      <div class="icon">⚖️</div>
+      <div class="title">AI法律咨询</div>
+      <div class="desc">DeepSeek驱动 · 三画像适配 · 智能风险标注</div>
+    </div>
+    <div class="feature-card" onclick="switchTab('exam')">
+      <div class="icon">📝</div>
+      <div class="title">法考题库</div>
+      <div class="desc">8科母题 · 即时纠错 · 错题本</div>
+    </div>
+    <div class="feature-card" onclick="switchTab('library')">
+      <div class="icon">📚</div>
+      <div class="title">法律文库</div>
+      <div class="desc">300+部法律 · 分类检索 · 条文查阅</div>
+    </div>
+    <div class="feature-card" onclick="switchTab('cases')">
+      <div class="icon">🔍</div>
+      <div class="title">案例查找</div>
+      <div class="desc">指导案例 · 裁判要旨 · 法条链接</div>
+    </div>
+    <div class="feature-card" onclick="switchTab('tools')">
+      <div class="icon">🧰</div>
+      <div class="title">工具箱</div>
+      <div class="desc">时效计算 · 赔偿估算 · 法律援助</div>
+    </div>
+    <div class="feature-card" onclick="openResearchDrawer()">
+      <div class="icon">🔬</div>
+      <div class="title">研究背景</div>
+      <div class="desc">10大失效模式 · 三维规制路径</div>
+    </div>
+  </div>
+
+  <div class="announce">
+    <div class="announce-card">
+      <span>⚠️</span>
+      <span>AI生成内容仅供参考，不构成法律意见。涉及具体法律事务请咨询执业律师。紧急情况请拨打 <strong>12348</strong> 法律援助热线。</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── TAB: CHAT ──────────────────────────────────── -->
+<section class="tab-content" id="tab-chat">
+  <div class="chat" id="chat">
+    <div class="welcome" id="welcomeScreen">
+      <div class="welcome-box">
+        <h1>郁 见</h1>
+        <p class="sub">AI 法律咨询助手<br>基于大创项目「AI法律工具失效模式与规制路径研究」<br>深知局限，如实标注</p>
+        <div class="quick-chips">
+          <button class="chip" onclick="quickAsk('被拖欠工资应该怎么维权？')">💰 劳动维权</button>
+          <button class="chip" onclick="quickAsk('民间借贷利息超过多少不受法律保护？')">📋 民间借贷</button>
+          <button class="chip" onclick="quickAsk('离婚时财产如何分割？')">💔 婚姻财产</button>
+          <button class="chip" onclick="quickAsk('遭遇网络诈骗应该怎么办？')">🔒 网络诈骗</button>
+          <button class="chip" onclick="quickAsk('轻微交通事故如何处理？')">🚗 交通事故</button>
+          <button class="chip" onclick="quickAsk('租房合同纠纷怎么解决？')">🏠 租房纠纷</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<!-- ── Input ──────────────────────────────────────── -->
-<div class="input-bar">
-  <div class="input-wrap">
-    <textarea id="userInput" placeholder="输入您关心的法律问题..." rows="1"
-      onkeydown="onKey(event)" oninput="autoGrow(this)"></textarea>
-    <button class="send-btn" id="sendBtn" onclick="send()" aria-label="发送">↑</button>
+  <div class="chat-top-row" style="padding: 0 20px;">
+    <div class="role-select" id="roleSelect">
+      <button class="active" data-role="general_public">公众</button>
+      <button data-role="law_student">法学生</button>
+      <button data-role="legal_professional">法律人</button>
+    </div>
   </div>
-  <p class="input-hint">按 Enter 发送 · 回答不构成法律意见 · <a href="#" onclick="openDrawer()">了解AI局限</a></p>
-</div>
+  <div class="input-bar">
+    <div class="input-wrap">
+      <textarea id="userInput" placeholder="输入您关心的法律问题..." rows="1" onkeydown="onKey(event)" oninput="autoGrow(this)"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="send()" aria-label="发送">↑</button>
+    </div>
+    <p class="input-hint">按 Enter 发送 · Shift+Enter 换行 · 回答不构成法律意见 · <a href="#" onclick="openResearchDrawer()">了解AI局限</a></p>
+  </div>
+</section>
 
-<!-- ── Disclaimer ─────────────────────────────────── -->
-<div class="disclaimer-bar">
+<!-- ── TAB: EXAM ──────────────────────────────────── -->
+<section class="tab-content" id="tab-exam">
+  <div class="exam-wrap">
+    <div class="exam-header">
+      <div class="exam-subject-select" id="subjectSelect">
+        <button class="active" data-subject="all">全部</button>
+        <button data-subject="民法">民法</button>
+        <button data-subject="刑法">刑法</button>
+        <button data-subject="行政法">行政法</button>
+        <button data-subject="民诉">民诉</button>
+        <button data-subject="刑诉">刑诉</button>
+        <button data-subject="商经">商经</button>
+        <button data-subject="理论法">理论法</button>
+        <button data-subject="三国法">三国法</button>
+      </div>
+      <div class="exam-stats">
+        <span>进度：<strong id="examProgress">0/0</strong></span>
+        <span>正确率：<strong id="examAccuracy">-</strong></span>
+        <button class="exam-btn" onclick="showWrongBook()">📋 错题本</button>
+        <button class="exam-btn" onclick="resetExam()">🔄 重置</button>
+      </div>
+    </div>
+    <div id="questionContainer"></div>
+    <div id="wrongBookContainer" class="wrong-book-section"></div>
+  </div>
+</section>
+
+<!-- ── TAB: LIBRARY ───────────────────────────────── -->
+<section class="tab-content" id="tab-library">
+  <div class="library-wrap">
+    <div class="lib-search-wrap">
+      <input type="text" class="lib-search" id="lawSearch" placeholder="搜索法律名称..." oninput="filterLaws()">
+    </div>
+    <div class="lib-cats" id="lawCats">
+      <button class="lib-cat active" data-cat="all">全部</button>
+      <button class="lib-cat" data-cat="宪法">宪法</button>
+      <button class="lib-cat" data-cat="民商法">民商法</button>
+      <button class="lib-cat" data-cat="刑法">刑法</button>
+      <button class="lib-cat" data-cat="行政法">行政法</button>
+      <button class="lib-cat" data-cat="经济法">经济法</button>
+      <button class="lib-cat" data-cat="社会法">社会法</button>
+      <button class="lib-cat" data-cat="程序法">程序法</button>
+      <button class="lib-cat" data-cat="国际法">国际法</button>
+    </div>
+    <p class="lib-count" id="lawCount">共 0 部法律</p>
+    <div class="law-list" id="lawList"></div>
+  </div>
+  <div class="law-detail-overlay" id="lawDetailOverlay" onclick="closeLawDetail(event)">
+    <div class="law-detail" id="lawDetailBox" onclick="event.stopPropagation()"></div>
+  </div>
+</section>
+
+<!-- ── TAB: CASES ─────────────────────────────────── -->
+<section class="tab-content" id="tab-cases">
+  <div class="case-wrap">
+    <div class="case-search-wrap">
+      <input type="text" class="case-search" id="caseSearch" placeholder="搜索案例关键词..." oninput="filterCases()">
+    </div>
+    <div class="case-cats" id="caseCats">
+      <button class="case-cat active" data-cat="all">全部</button>
+      <button class="case-cat" data-cat="民事">民事</button>
+      <button class="case-cat" data-cat="刑事">刑事</button>
+      <button class="case-cat" data-cat="行政">行政</button>
+      <button class="case-cat" data-cat="知识产权">知识产权</button>
+      <button class="case-cat" data-cat="指导案例">指导案例</button>
+    </div>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:12px;" id="caseCount">共 0 个案例</p>
+    <div class="case-list" id="caseList"></div>
+  </div>
+  <div class="case-detail-overlay" id="caseDetailOverlay" onclick="closeCaseDetail(event)">
+    <div class="case-detail" id="caseDetailBox" onclick="event.stopPropagation()"></div>
+  </div>
+</section>
+
+<!-- ── TAB: TOOLS ─────────────────────────────────── -->
+<section class="tab-content" id="tab-tools">
+  <div class="tools-wrap">
+    <div class="tools-grid">
+      <!-- 诉讼时效计算器 -->
+      <div class="tool-card">
+        <h3>⏱️ 诉讼时效计算器</h3>
+        <div class="tool-form">
+          <select id="statuteType">
+            <option value="3">普通诉讼时效 — 3年</option>
+            <option value="1">特别时效 — 1年（人身伤害等）</option>
+            <option value="4">国际货物买卖 — 4年</option>
+            <option value="20">最长保护期限 — 20年</option>
+          </select>
+          <input type="date" id="statuteDate" placeholder="权利被侵害日期">
+          <button class="tool-btn" onclick="calcStatute()">计算</button>
+          <div class="tool-result" id="statuteResult"></div>
+        </div>
+      </div>
+
+      <!-- 劳动赔偿估算 -->
+      <div class="tool-card">
+        <h3>💰 劳动赔偿估算</h3>
+        <div class="tool-form">
+          <input type="number" id="monthlyWage" placeholder="月工资（元）">
+          <input type="number" id="workYears" placeholder="工作年限">
+          <select id="dismissType">
+            <option value="n">N — 协商解除/合同期满</option>
+            <option value="n1">N+1 — 未提前30日通知</option>
+            <option value="2n">2N — 违法解除</option>
+          </select>
+          <button class="tool-btn" onclick="calcCompensation()">估算</button>
+          <div class="tool-result" id="compensationResult"></div>
+        </div>
+      </div>
+
+      <!-- 民间借贷利息 -->
+      <div class="tool-card">
+        <h3>📊 民间借贷利息计算</h3>
+        <div class="tool-form">
+          <input type="number" id="loanPrincipal" placeholder="借款本金（元）">
+          <input type="number" id="loanMonths" placeholder="借款期限（月）">
+          <input type="number" id="loanRate" placeholder="约定年利率（%，如15）">
+          <button class="tool-btn" onclick="calcLoanInterest()">计算</button>
+          <div class="tool-result" id="loanResult"></div>
+        </div>
+      </div>
+
+      <!-- 法律援助指南 -->
+      <div class="tool-card">
+        <h3>📞 法律援助指南</h3>
+        <div class="aid-list">
+          <div class="aid-item"><span class="aid-name">全国法律援助热线</span><span>12348</span></div>
+          <div class="aid-item"><span class="aid-name">报警电话</span><span>110</span></div>
+          <div class="aid-item"><span class="aid-name">消费者投诉</span><span>12315</span></div>
+          <div class="aid-item"><span class="aid-name">劳动维权热线</span><span>12333</span></div>
+          <div class="aid-item"><span class="aid-name">妇女维权热线</span><span>12338</span></div>
+          <div class="aid-item"><span class="aid-name">青少年维权热线</span><span>12355</span></div>
+          <div class="aid-item"><span class="aid-name">检察服务热线</span><span>12309</span></div>
+          <div class="aid-item"><span class="aid-name">法院诉讼服务</span><span>12368</span></div>
+        </div>
+      </div>
+
+      <!-- 诉讼费计算 -->
+      <div class="tool-card">
+        <h3>🏛️ 诉讼费估算</h3>
+        <div class="tool-form">
+          <select id="caseType">
+            <option value="property">财产案件</option>
+            <option value="divorce">离婚案件</option>
+            <option value="labor">劳动争议</option>
+            <option value="admin">行政案件</option>
+          </select>
+          <input type="number" id="claimAmount" placeholder="标的金额（元）">
+          <button class="tool-btn" onclick="calcCourtFee()">估算</button>
+          <div class="tool-result" id="courtFeeResult"></div>
+        </div>
+      </div>
+
+      <!-- 工伤赔偿 -->
+      <div class="tool-card">
+        <h3>🏥 工伤赔偿参考</h3>
+        <div class="tool-form">
+          <select id="injuryLevel">
+            <option value="10">十级伤残</option>
+            <option value="9">九级伤残</option>
+            <option value="8">八级伤残</option>
+            <option value="7">七级伤残</option>
+            <option value="6">六级伤残</option>
+            <option value="5">五级伤残</option>
+            <option value="1">一至四级伤残</option>
+          </select>
+          <input type="number" id="injuryWage" placeholder="月工资（元，默认按当地平均）">
+          <button class="tool-btn" onclick="calcInjury()">参考估算</button>
+          <div class="tool-result" id="injuryResult"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════ -->
+<div class="footer-bar">
   <span>⚠️ AI生成内容仅供参考，不构成法律意见</span>
-  <a href="#" onclick="openDrawer()">研究背景</a>
+  <a onclick="openResearchDrawer()">研究背景</a>
+  <span>西南民族大学法学院 · 2026</span>
 </div>
 
-<!-- ── Drawer ─────────────────────────────────────── -->
-<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
-<div class="drawer" id="drawer">
-  <button class="close-btn" onclick="closeDrawer()">✕</button>
-  <h3>🔬 研究背景</h3>
-  <p>
-    「郁见」基于西南民族大学法学院大创项目《AI法律工具失效模式与规制路径研究》（2026）开发。
-    项目对 DeepSeek、千问等主流AI进行8类案例×2轮测试×4维测评，发现<strong>10大通用失效模式</strong>。
-  </p>
-  <h3>⚠️ AI法律工具已知局限</h3>
-  <ul>
-    <li><strong>法条幻视</strong>：引用不存在或已废止的法律</li>
-    <li><strong>罪名降维</strong>：倾向于分析更轻的罪名定性</li>
-    <li><strong>量刑偏差</strong>：系统性地低估刑期（实测误差可达71%）</li>
-    <li><strong>浅度正确</strong>：结论正确但缺乏法理深度</li>
-    <li><strong>前提盲区</strong>：不验证用户预设前提是否成立</li>
-    <li><strong>引导缺失</strong>：提供分析但不给实务操作指引</li>
-    <li><strong>计算不一致</strong>：多步计算可能自相矛盾</li>
-    <li><strong>因果简化</strong>：将复杂因果关系过于简化</li>
-    <li><strong>国际法缺失</strong>：分析局限于国内法视角</li>
-    <li><strong>用户差异盲区</strong>：对不同认知水平用户的风险提示不足</li>
-  </ul>
-  <h3>🛡️ 本系统的防护机制</h3>
-  <ul>
-    <li>用户画像感知 → 调整回答深度和风险提示强度</li>
-    <li>法条核实标注 → 提醒验证引用法条的时效性</li>
-    <li>量刑预警 → 标注AI预测与实际判决的偏差风险</li>
-    <li>实务指引补充 → 主动提供维权途径和操作建议</li>
-  </ul>
-  <h3>🎯 三维规制路径</h3>
-  <p>本项目提出<strong>技术规范 + 教育引导 + 法律保障</strong>三维规制框架，从开发者、用户、监管三个层面推动AI法律工具健康发展。</p>
-  <p style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
-    项目团队：徐子涵团队<br>单位：西南民族大学法学院<br>年份：2026
-  </p>
+<!-- ═══════════════════════════════════════════════════════
+   RESEARCH DRAWER
+   ═══════════════════════════════════════════════════════ -->
+<div class="law-detail-overlay" id="researchOverlay" onclick="closeResearchDrawer()">
+  <div class="law-detail" style="max-width:640px;" onclick="event.stopPropagation()">
+    <button class="close-detail" onclick="closeResearchDrawer()">✕</button>
+    <h3>🔬 研究背景</h3>
+    <p style="font-size:13px;line-height:1.7;color:var(--text2);margin-bottom:12px;">
+      「郁见」基于西南民族大学法学院大创项目《AI法律工具失效模式与规制路径研究》（2026）开发。
+      项目对 DeepSeek、千问等主流AI进行8类案例×2轮测试×4维测评，发现<strong>10大通用失效模式</strong>。
+    </p>
+    <h4 style="font-size:14px;margin-bottom:6px;">⚠️ 10大失效模式</h4>
+    <ol style="font-size:12px;color:var(--text2);padding-left:18px;line-height:2;">
+      <li><strong>法条幻视</strong> — 引用不存在或已废止的法律</li>
+      <li><strong>罪名降维</strong> — 倾向于分析更轻的罪名定性</li>
+      <li><strong>量刑偏差</strong> — 系统性地低估刑期（实测误差可达71%）</li>
+      <li><strong>浅度正确</strong> — 结论正确但缺乏法理深度</li>
+      <li><strong>前提盲区</strong> — 不验证用户预设前提是否成立</li>
+      <li><strong>引导缺失</strong> — 提供分析但不给实务操作指引</li>
+      <li><strong>计算不一致</strong> — 多步计算可能自相矛盾</li>
+      <li><strong>因果简化</strong> — 将复杂因果关系过于简化</li>
+      <li><strong>国际法缺失</strong> — 分析局限于国内法视角</li>
+      <li><strong>用户差异盲区</strong> — 对不同认知水平用户风险提示不足</li>
+    </ol>
+    <h4 style="font-size:14px;margin:12px 0 6px;">🎯 三维规制路径</h4>
+    <p style="font-size:13px;line-height:1.7;color:var(--text2);">
+      技术规范 + 教育引导 + 法律保障<br>
+      从开发者、用户、监管三个层面推动AI法律工具健康发展。
+    </p>
+    <p style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--text3);">
+      项目团队：徐子涵团队 · 西南民族大学法学院 · 2026
+    </p>
+  </div>
 </div>
 
-<!-- ── Toast Container ────────────────────────────── -->
+<!-- ═══════════════════════════════════════════════════════
+   SCROLL-TO-TOP BUTTON
+   ═══════════════════════════════════════════════════════ -->
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
 <div id="toastContainer"></div>
 
+<!-- ═══════════════════════════════════════════════════════
+   JAVASCRIPT
+   ═══════════════════════════════════════════════════════ -->
 <script>
 // ═══════════════════════════════════════════════════════
-// Configuration
+// SECTION 1: Navigation System
+// ═══════════════════════════════════════════════════════
+let currentTab = 'home';
+
+document.getElementById('navTabs').addEventListener('click', e => {
+  const btn = e.target.closest('.nav-tab');
+  if (!btn) return;
+  switchTab(btn.dataset.tab);
+});
+
+// logo click handled via onclick attribute in HTML
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.tab-content').forEach(s => s.classList.toggle('active', s.id === 'tab-' + tab));
+  if (tab === 'library') renderLawList();
+  if (tab === 'cases') renderCaseList();
+  if (tab === 'exam') renderQuestion();
+  document.getElementById('mainContent').scrollTop = 0;
+  saveState();
+}
+
+// ═══════════════════════════════════════════════════════
+// SECTION 2: Research Drawer
+// ═══════════════════════════════════════════════════════
+function openResearchDrawer() { document.getElementById('researchOverlay').classList.add('show'); }
+function closeResearchDrawer() { document.getElementById('researchOverlay').classList.remove('show'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeResearchDrawer(); closeLawDetail(); closeCaseDetail(); } });
+
+// ═══════════════════════════════════════════════════════
+// SECTION 3: AI Chat (preserved from original)
 // ═══════════════════════════════════════════════════════
 const DEEPSEEK_API_KEY = 'sk-93f4549aac4f429f98107ce37bb82a4b';
 const DEEPSEEK_URL = 'https://api.deepseek.com/chat/completions';
 
-// ═══════════════════════════════════════════════════════
-// System Prompts — built from 大创 research findings
-// ═══════════════════════════════════════════════════════
-
 const BASE_RULES = `你是一个名为"郁见"的法律咨询AI助手。你是由西南民族大学法学院"AI法律工具失效模式与规制路径研究"大创项目团队开发的。
 
 【核心行为准则 - 基于10大失效模式研究】
-
-1. 【法条真实性 F1】只引用现行有效的中国法律法规。如不确定某法条是否存在或已废止，必须明确说明"本项引用需核实"。
-2. 【罪名分析完整性 F2】分析刑事案件时，必须讨论所有可能适用的罪名，标注争议性，不可仅分析最常见定性。
-3. 【量刑预测谨慎 F3】涉及量刑预测时，必须给出范围区间而非单一数值，标注"此为AI估算，不可作为实际判决预期"。
-4. 【分析深度 F4】不仅要给出结论，必须穿透到法理逻辑层，探讨替代法律理论和不同学说观点。
-5. 【前提验证 F5】如果用户问题中包含可能不成立的前提假设，必须先指出并纠正，再进行分析。
-6. 【实务指导 F6】除法律分析外，必须提供：证据收集建议、维权途径、程序指引、相关机构联系方式。
-7. 【计算验证 F7】涉及金额计算时，必须展示完整计算过程，标注利率基准和计算时点。
-8. 【因果关系 F8】分析复杂案件时，必须考虑多因一果的可能性，不简化因果链条。
-9. 【国际法视野 F9】涉及人权、妇女儿童权益、国际条约的案件，需补充国际法和比较法视角。
-10.【用户差异 F10】根据用户背景调整回答深度和风险提示强度。
-
-【输出格式要求】
-- 每个回答末尾必须附加"⚠️ 风险提示"区块
-- 涉及法条引用时标注"📋 法条核实"区块
-- 如有争议性分析标注"🔄 替代观点"区块`;
+1.【法条真实性 F1】只引用现行有效的中国法律法规。如不确定某法条是否存在或已废止，必须明确说明"本项引用需核实"。
+2.【罪名分析完整性 F2】分析刑事案件时必须讨论所有可能适用的罪名，标注争议性。
+3.【量刑预测谨慎 F3】涉及量刑预测时必须给出范围区间，标注"此为AI估算，不可作为实际判决预期"。
+4.【分析深度 F4】不仅要给出结论，必须穿透到法理逻辑层，探讨替代法律理论和不同学说观点。
+5.【前提验证 F5】如果用户问题中包含可能不成立的前提假设，必须先指出并纠正。
+6.【实务指导 F6】除法律分析外必须提供：证据收集建议、维权途径、程序指引、相关机构联系方式。
+7.【计算验证 F7】涉及金额计算时必须展示完整计算过程，标注利率基准和计算时点。
+8.【因果关系 F8】分析复杂案件时必须考虑多因一果的可能性，不简化因果链条。
+9.【国际法视野 F9】涉及人权、妇女儿童权益、国际条约的案件，需补充国际法和比较法视角。
+10.【用户差异 F10】根据用户背景调整回答深度和风险提示强度。`;
 
 const ROLE_PROMPTS = {
-  law_student:
-    "【当前用户：法学院学生】请提供深度法理分析，引用学说和不同观点。鼓励批判性思维，指出AI分析的局限性。可推荐相关论文、判例和参考书目。",
-  legal_professional:
-    "【当前用户：法律从业者】请提供专业级分析，关注实务操作细节。可引用司法解释、指导案例、裁判观点。聚焦程序策略、证据规则、诉讼技巧。",
-  general_public:
-    "【当前用户：普通公众（非法律专业）】请使用通俗易懂的语言，避免过多法律术语。每个法律概念首次出现时必须简要解释。重点放在：①问题的法律性质 ②可行的维权途径 ③应该找什么机构/律师。风险提示必须更加醒目和详尽。多次强调：本回答不构成法律意见，请咨询执业律师。",
+  law_student: "【当前用户：法学院学生】请提供深度法理分析，引用学说和不同观点。鼓励批判性思维。可推荐相关论文、判例和参考书目。",
+  legal_professional: "【当前用户：法律从业者】请提供专业级分析，关注实务操作细节。可引用司法解释、指导案例、裁判观点。",
+  general_public: "【当前用户：普通公众（非法律专业）】请使用通俗易懂的语言。重点放在：①问题的法律性质 ②可行的维权途径 ③应该找什么机构/律师。风险提示必须更加醒目和详尽。",
 };
 
-const SAFETY_NOTES = `\n\n---\n### ⚠️ 重要风险提示\n- 本回答由AI生成，**不构成正式法律意见**，仅供参考\n- AI可能存在"法条幻视"（引用不存在或已废止的法律）\n- AI可能低估罪名严重性或量刑幅度\n- AI对复杂案件的分析可能过于简化\n- **强烈建议**：涉及具体法律事务时，务必咨询持证执业律师\n- 如遇紧急情况，请拨打 **12348** 法律援助热线\n\n*本AI助手由西南民族大学法学院大创项目"AI法律工具失效模式与规制路径研究"团队开发，旨在提升公众对AI法律工具局限性的认知。*`;
+const SAFETY_NOTES = `\n\n---\n### ⚠️ 重要风险提示\n- 本回答由AI生成，**不构成正式法律意见**\n- AI可能存在"法条幻视"（引用不存在或已废止的法律）\n- AI可能低估罪名严重性或量刑幅度\n- **强烈建议**：涉及具体法律事务时务必咨询持证执业律师\n- 如遇紧急情况请拨打 **12348** 法律援助热线`;
 
-// ═══════════════════════════════════════════════════════
-// State
-// ═══════════════════════════════════════════════════════
 let userRole = 'general_public';
 let chatHistory = [];
 let waiting = false;
 
-// ═══════════════════════════════════════════════════════
-// Role Selector
-// ═══════════════════════════════════════════════════════
 document.getElementById('roleSelect').addEventListener('click', e => {
   const btn = e.target.closest('button');
   if (!btn) return;
@@ -532,113 +986,17 @@ document.getElementById('roleSelect').addEventListener('click', e => {
   showToast('已切换为「' + names[userRole] + '」模式');
 });
 
-// ═══════════════════════════════════════════════════════
-// Drawer
-// ═══════════════════════════════════════════════════════
-function openDrawer() {
-  document.getElementById('drawer').classList.add('show');
-  document.getElementById('overlay').classList.add('show');
-}
-function closeDrawer() {
-  document.getElementById('drawer').classList.remove('show');
-  document.getElementById('overlay').classList.remove('show');
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+function autoGrow(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 140) + 'px'; }
+function onKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } }
+function quickAsk(q) { switchTab('chat'); setTimeout(() => { document.getElementById('userInput').value = q; send(); }, 200); }
 
-// ═══════════════════════════════════════════════════════
-// Input helpers
-// ═══════════════════════════════════════════════════════
-function autoGrow(el) {
-  el.style.height = 'auto';
-  el.style.height = Math.min(el.scrollHeight, 140) + 'px';
-}
-function onKey(e) {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
-}
-function quickAsk(q) {
-  document.getElementById('userInput').value = q;
-  send();
-}
-
-// ═══════════════════════════════════════════════════════
-// Toast
-// ═══════════════════════════════════════════════════════
 function showToast(msg) {
   const el = document.createElement('div');
-  el.className = 'toast';
-  el.textContent = msg;
+  el.className = 'toast'; el.textContent = msg;
   document.getElementById('toastContainer').appendChild(el);
-  setTimeout(() => el.remove(), 3000);
+  setTimeout(() => el.remove(), 2500);
 }
 
-// ═══════════════════════════════════════════════════════
-// Send Message
-// ═══════════════════════════════════════════════════════
-async function send() {
-  const input = document.getElementById('userInput');
-  const msg = input.value.trim();
-  if (!msg || waiting) return;
-
-  input.value = '';
-  input.style.height = 'auto';
-  waiting = true;
-  document.getElementById('sendBtn').disabled = true;
-
-  const welcome = document.getElementById('welcomeScreen');
-  if (welcome) welcome.style.display = 'none';
-
-  addMsg('user', msg);
-  const loadingEl = addMsg('assistant', '…');
-
-  try {
-    const systemPrompt = BASE_RULES + '\n' + ROLE_PROMPTS[userRole];
-
-    const messages = [
-      { role: 'system', content: systemPrompt },
-      ...chatHistory.slice(-20),
-      { role: 'user', content: msg },
-    ];
-
-    const res = await fetch(DEEPSEEK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + DEEPSEEK_API_KEY },
-      body: JSON.stringify({ model: 'deepseek-chat', messages, temperature: 0.3, max_tokens: 4096 }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      loadingEl.remove();
-      const errMsg = data.error?.message || '请求失败 ' + res.status;
-      if (res.status === 401) addMsg('assistant', '❌ API Key 无效或已过期，请联系管理员更新。');
-      else if (res.status === 402) addMsg('assistant', '❌ DeepSeek API 账户余额不足。');
-      else addMsg('assistant', '❌ 请求失败：' + errMsg);
-    } else {
-      loadingEl.remove();
-      let reply = data.choices[0].message.content;
-
-      // Append smart safety notes
-      const disclaimers = detectContent(reply);
-      reply += buildSmartNotes(reply, disclaimers);
-
-      chatHistory.push({ role: 'user', content: msg });
-      chatHistory.push({ role: 'assistant', content: reply });
-
-      addMsg('assistant', reply, disclaimers);
-    }
-  } catch (err) {
-    loadingEl.remove();
-    addMsg('assistant', '❌ 网络连接失败，请检查网络后重试。');
-  }
-
-  waiting = false;
-  document.getElementById('sendBtn').disabled = false;
-  document.getElementById('userInput').focus();
-}
-
-// ═══════════════════════════════════════════════════════
-// Content Detection (for smart safety tags)
-// ═══════════════════════════════════════════════════════
 function detectContent(text) {
   return {
     has_legal_reference: /《[^》]+》/.test(text),
@@ -651,48 +1009,16 @@ function detectContent(text) {
 
 function buildSmartNotes(text, d) {
   let notes = [];
-  if (d.has_legal_reference) notes.push("- 📋 文中引用的法条可能未被AI验证存在性或时效性，请通过官方渠道核实");
-  if (d.has_sentencing) notes.push("- ⚖️ 文中量刑预测为AI基于有限信息估算，存在>=40%偏差可能（本团队实证研究结论）");
-  if (d.has_calculation) notes.push("- 🧮 金额计算可能因利率基准选择、计算时点不同而产生差异，请重新核验");
-  if (!d.has_alternative) notes.push("- 🔄 本分析可能存在「浅度正确」问题——结论正确但未深入替代法律理论");
-  if (!d.has_procedure) notes.push("- 📝 本回答可能缺乏实务操作指导（「引导性赤字」），建议进一步询问维权途径");
-
+  if (d.has_legal_reference) notes.push("- 📋 文中引用的法条请通过官方渠道核实时效性");
+  if (d.has_sentencing) notes.push("- ⚖️ 文中量刑预测为AI基于有限信息估算，存在>=40%偏差可能");
+  if (d.has_calculation) notes.push("- 🧮 金额计算可能因利率基准不同产生差异，请重新核验");
+  if (!d.has_alternative) notes.push("- 🔄 本分析可能存在「浅度正确」问题");
+  if (!d.has_procedure) notes.push("- 📝 本回答可能缺乏实务操作指导");
   let base = SAFETY_NOTES;
   if (notes.length) base += "\n\n**针对本回答的特别提示：**\n" + notes.join("\n");
   return base;
 }
 
-// ═══════════════════════════════════════════════════════
-// Render Message
-// ═══════════════════════════════════════════════════════
-function addMsg(role, content, disclaimers) {
-  const chat = document.getElementById('chat');
-  const div = document.createElement('div');
-  div.className = `msg ${role}`;
-
-  const avatarIcon = role === 'user' ? '👤' : '⚖️';
-  const loading = content === '…';
-  let tagsHtml = '';
-
-  if (disclaimers) {
-    if (disclaimers.has_legal_reference) tagsHtml += '<span class="tag">📋 含法条引用 · 请核实</span> ';
-    if (disclaimers.has_sentencing) tagsHtml += '<span class="tag warn">⚖️ 含量刑预测 · 仅供参考</span> ';
-  }
-
-  div.innerHTML = `<div class="avatar">${avatarIcon}</div>
-    <div class="body">
-      <div class="bubble">${loading ? '<span style="color:var(--text3)">思考中…</span>' : md(content)}</div>
-      ${tagsHtml}
-    </div>`;
-
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
-  return div;
-}
-
-// ═══════════════════════════════════════════════════════
-// Mini Markdown Renderer
-// ═══════════════════════════════════════════════════════
 function md(t) {
   return t
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
@@ -714,6 +1040,651 @@ function md(t) {
     .replace(/<p><h/g, '<h')
     .replace(/<\/h\d><\/p>/g, m => m.slice(0,5) + m.slice(7));
 }
+
+function addMsg(role, content, disclaimers) {
+  const chat = document.getElementById('chat');
+  const div = document.createElement('div');
+  div.className = 'msg ' + role;
+  const avatarIcon = role === 'user' ? '👤' : '⚖️';
+  const loading = content === '…';
+  let tagsHtml = '';
+  if (disclaimers) {
+    if (disclaimers.has_legal_reference) tagsHtml += '<span class="tag">📋 含法条引用 · 请核实</span> ';
+    if (disclaimers.has_sentencing) tagsHtml += '<span class="tag warn">⚖️ 含量刑预测 · 仅供参考</span> ';
+  }
+  div.innerHTML = '<div class="avatar">' + avatarIcon + '</div><div class="body"><div class="bubble">' + (loading ? '<span style="color:var(--text3)">思考中…</span>' : md(content)) + '</div>' + tagsHtml + '</div>';
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+  return div;
+}
+
+async function send() {
+  const input = document.getElementById('userInput');
+  const msg = input.value.trim();
+  if (!msg || waiting) return;
+  input.value = ''; input.style.height = 'auto';
+  waiting = true;
+  document.getElementById('sendBtn').disabled = true;
+  const welcome = document.getElementById('welcomeScreen');
+  if (welcome) welcome.style.display = 'none';
+  addMsg('user', msg);
+  const loadingEl = addMsg('assistant', '…');
+  try {
+    const systemPrompt = BASE_RULES + '\n' + ROLE_PROMPTS[userRole];
+    const messages = [{ role: 'system', content: systemPrompt }, ...chatHistory.slice(-20), { role: 'user', content: msg }];
+    const res = await fetch(DEEPSEEK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + DEEPSEEK_API_KEY },
+      body: JSON.stringify({ model: 'deepseek-chat', messages, temperature: 0.3, max_tokens: 4096 }),
+    });
+    const data = await res.json();
+    loadingEl.remove();
+    if (!res.ok) {
+      if (res.status === 401) addMsg('assistant', '❌ API Key 无效或已过期');
+      else if (res.status === 402) addMsg('assistant', '❌ DeepSeek API 账户余额不足');
+      else addMsg('assistant', '❌ 请求失败：' + (data.error?.message || res.status));
+    } else {
+      let reply = data.choices[0].message.content;
+      const disclaimers = detectContent(reply);
+      reply += buildSmartNotes(reply, disclaimers);
+      chatHistory.push({ role: 'user', content: msg });
+      chatHistory.push({ role: 'assistant', content: reply });
+      addMsg('assistant', reply, disclaimers);
+    }
+  } catch (err) {
+    loadingEl.remove();
+    addMsg('assistant', '❌ 网络连接失败，请检查网络后重试。');
+  }
+  waiting = false;
+  document.getElementById('sendBtn').disabled = false;
+  document.getElementById('userInput').focus();
+}
+
+// ═══════════════════════════════════════════════════════
+// SECTION 4: Law Exam Question Bank
+// ═══════════════════════════════════════════════════════
+const EXAM_QUESTIONS = [
+  // 民法
+  { id:1, subject:'民法', type:'single', question:'甲将自己的房屋出租给乙，租期3年。租期届满后，乙继续居住并支付租金，甲未提出异议。此时甲乙之间的租赁关系属于？', options:['定期租赁，租期3年','不定期租赁','租赁关系终止','买卖合同关系'], answer:1, explanation:'根据《民法典》第734条，租赁期限届满，承租人继续使用租赁物，出租人没有提出异议的，原租赁合同继续有效，但是租赁期限为不定期。' },
+  { id:2, subject:'民法', type:'single', question:'根据《民法典》，一般诉讼时效期间为几年？', options:['1年','2年','3年','5年'], answer:2, explanation:'《民法典》第188条规定，向人民法院请求保护民事权利的诉讼时效期间为三年。法律另有规定的，依照其规定。' },
+  { id:3, subject:'民法', type:'multi', question:'下列哪些属于《民法典》规定的用益物权？', options:['土地承包经营权','建设用地使用权','抵押权','地役权'], answer:[0,1,3], explanation:'抵押权属于担保物权而非用益物权。《民法典》规定的用益物权包括土地承包经营权、建设用地使用权、宅基地使用权、地役权、居住权等。' },
+  { id:4, subject:'民法', type:'single', question:'甲在银行办理定期存款，约定年利率3%。这体现了哪种民事法律关系？', options:['买卖合同','委托合同','储蓄合同','借款合同'], answer:2, explanation:'储蓄合同是存款人将货币存入储蓄机构，储蓄机构支付本息的合同。定期存款属于典型的储蓄合同关系。' },
+  { id:5, subject:'民法', type:'single', question:'根据《民法典》，因产品存在缺陷造成他人损害的，被侵权人可以向谁请求赔偿？', options:['只能向生产者','只能向销售者','可以向生产者或销售者','只能向运输者'], answer:2, explanation:'《民法典》第1203条规定，因产品存在缺陷造成他人损害的，被侵权人可以向产品的生产者请求赔偿，也可以向产品的销售者请求赔偿。' },
+  // 刑法
+  { id:6, subject:'刑法', type:'single', question:'张某欲杀李某，深夜潜入李某家中，用刀捅刺熟睡中的李某数刀。但李某已于数小时前因心脏病发死亡。张某的行为属于？', options:['故意杀人既遂','故意杀人未遂','故意杀人中止','不构成犯罪'], answer:1, explanation:'对象不能犯的未遂。李某已死亡，张某的行为不可能达成杀人目的，属于不能犯未遂。根据《刑法》第23条，对于未遂犯可以比照既遂犯从轻或者减轻处罚。' },
+  { id:7, subject:'刑法', type:'single', question:'根据《刑法》，以下哪种情形可以适用缓刑？', options:['被判处拘役的犯罪分子','被判处无期徒刑的犯罪分子','累犯','被判处10年有期徒刑的暴力犯罪分子'], answer:0, explanation:'《刑法》第72条规定，对于被判处拘役、三年以下有期徒刑的犯罪分子，同时符合犯罪情节较轻、有悔罪表现、没有再犯罪的危险、宣告缓刑对所居住社区没有重大不良影响的，可以宣告缓刑。累犯不适用缓刑。' },
+  { id:8, subject:'刑法', type:'multi', question:'下列哪些属于《刑法》规定的正当防卫的条件？', options:['必须针对不法侵害行为','可以超过必要限度','必须是为了保护合法权益','防卫过当应负刑事责任'], answer:[0,2,3], explanation:'正当防卫不能超过必要限度造成不应有的损害。超过必要限度造成不应有损害的，属于防卫过当，应当负刑事责任，但应当减轻或者免除处罚。' },
+  { id:9, subject:'刑法', type:'single', question:'王某盗窃他人手机一部，价值3000元。王某的行为构成？', options:['不构成犯罪','盗窃罪','侵占罪','诈骗罪'], answer:1, explanation:'根据《刑法》第264条及相关司法解释，盗窃公私财物价值1000元至3000元以上应认定为"数额较大"。王某盗窃手机价值3000元，达到立案标准，构成盗窃罪。' },
+  { id:10, subject:'刑法', type:'single', question:'根据《刑法》规定，已满14周岁不满16周岁的人，对下列哪项犯罪应负刑事责任？', options:['盗窃罪','故意杀人罪','交通肇事罪','诈骗罪'], answer:1, explanation:'《刑法》第17条规定，已满14周岁不满16周岁的人对故意杀人、故意伤害致人重伤或死亡、强奸、抢劫、贩卖毒品、放火、爆炸、投放危险物质罪8种犯罪负刑事责任。' },
+  // 行政法
+  { id:11, subject:'行政法', type:'single', question:'公民对行政机关作出的下列哪种行为可以提起行政诉讼？', options:['国家行为','抽象行政行为','行政处罚决定','行政机关内部奖惩'], answer:2, explanation:'《行政诉讼法》第12条规定，对行政拘留、暂扣或吊销许可证和执照、责令停产停业、没收违法所得、没收非法财物、罚款、警告等行政处罚不服的，可以提起行政诉讼。' },
+  { id:12, subject:'行政法', type:'single', question:'行政复议的申请期限一般为知道该具体行政行为之日起多少日内？', options:['15日','30日','60日','90日'], answer:2, explanation:'《行政复议法》第9条规定，公民、法人或者其他组织认为具体行政行为侵犯其合法权益的，可以自知道该具体行政行为之日起60日内提出行政复议申请。' },
+  { id:13, subject:'行政法', type:'single', question:'在行政诉讼中，举证责任主要由谁承担？', options:['原告','被告（行政机关）','人民法院','诉讼代理人'], answer:1, explanation:'《行政诉讼法》第34条规定，被告对作出的行政行为负有举证责任，应当提供作出该行政行为的证据和所依据的规范性文件。这是"谁主张谁举证"原则的特殊例外。' },
+  // 民诉
+  { id:14, subject:'民诉', type:'single', question:'根据《民事诉讼法》，对公民提起的民事诉讼，一般由哪个法院管辖？', options:['原告住所地','被告住所地','侵权行为地','合同签订地'], answer:1, explanation:'《民事诉讼法》第22条规定，对公民提起的民事诉讼，由被告住所地人民法院管辖；被告住所地与经常居住地不一致的，由经常居住地人民法院管辖。这是"原告就被告"原则。' },
+  { id:15, subject:'民诉', type:'single', question:'根据《民事诉讼法》，下列哪种判决可以上诉？', options:['最高人民法院的一审判决','基层法院的调解书','中级法院的一审判决','小额诉讼判决'], answer:2, explanation:'《民事诉讼法》规定，当事人不服地方人民法院第一审判决、裁定的，有权在规定期限内提起上诉。最高人民法院的一审判决为终审判决，小额诉讼判决实行一审终审。' },
+  // 刑诉
+  { id:16, subject:'刑诉', type:'single', question:'根据《刑事诉讼法》，犯罪嫌疑人有权委托辩护人的最早时间是？', options:['被侦查机关第一次讯问后','被逮捕后','审查起诉阶段','审判阶段'], answer:0, explanation:'《刑事诉讼法》第34条规定，犯罪嫌疑人自被侦查机关第一次讯问或者采取强制措施之日起，有权委托辩护人。侦查期间只能委托律师作为辩护人。' },
+  { id:17, subject:'刑诉', type:'single', question:'根据《刑事诉讼法》，下列哪种人员不能担任辩护人？', options:['律师','被告人的亲友','正在被执行刑罚的人','人民团体推荐的人'], answer:2, explanation:'《刑事诉讼法》第33条规定，正在被执行刑罚或者依法被剥夺、限制人身自由的人，不得担任辩护人。' },
+  // 商经
+  { id:18, subject:'商经', type:'single', question:'根据《公司法》（2023修订），有限责任公司的最低注册资本为？', options:['3万元','10万元','无最低限额','1万元'], answer:2, explanation:'2014年起，除法律、行政法规另有规定外，公司注册资本实行认缴制，取消了有限责任公司和一人有限责任公司的最低注册资本限制。2023年修订的《公司法》维持了这一原则。' },
+  { id:19, subject:'商经', type:'single', question:'根据《消费者权益保护法》，经营者提供商品有欺诈行为的，消费者可以要求？', options:['退货','换货','退一赔三（最低500元）','退一赔二'], answer:2, explanation:'《消费者权益保护法》第55条规定，经营者提供商品或服务有欺诈行为的，应当按照消费者的要求增加赔偿其受到的损失，增加赔偿的金额为消费者购买商品价款或接受服务费用的三倍；增加赔偿的金额不足五百元的，为五百元。' },
+  { id:20, subject:'商经', type:'single', question:'世界贸易组织（WTO）的最惠国待遇原则规定在哪个文件中？', options:['GATT 1947','GATS','TRIPS','GATT 1994 第1条'], answer:3, explanation:'GATT 1994第1条规定了最惠国待遇原则（MFN），要求WTO成员方在对外贸易中给予其他成员方不低于任何第三方的待遇。' },
+  // 理论法
+  { id:21, subject:'理论法', type:'single', question:'根据我国宪法，全国人民代表大会每届任期为？', options:['3年','4年','5年','6年'], answer:2, explanation:'《宪法》第60条规定，全国人民代表大会每届任期五年。' },
+  { id:22, subject:'理论法', type:'single', question:'我国宪法规定，公民的哪项既是权利又是义务？', options:['休息权','受教育权','选举权','申诉权'], answer:1, explanation:'《宪法》第46条规定，中华人民共和国公民有受教育的权利和义务。宪法规定既是权利又是义务的还有劳动权（第42条）。' },
+  // 三国法
+  { id:23, subject:'三国法', type:'single', question:'国际法院的判决具有何种效力？', options:['可以上诉','对当事国具有约束力','仅具有建议性质','可在国内法院强制执行'], answer:1, explanation:'《国际法院规约》第59条规定，法院的裁判除对当事国及本案外，无约束力。第60条规定判决为确定的、终审的，不得上诉。判决对当事国具有法律约束力，但国际法院没有强制执行权。' },
+  { id:24, subject:'三国法', type:'single', question:'根据《联合国海洋法公约》，专属经济区的最大宽度为？', options:['12海里','24海里','200海里','350海里'], answer:2, explanation:'《联合国海洋法公约》第57条规定，专属经济区从测算领海宽度的基线量起，不应超过200海里。' },
+];
+
+let examState = loadExamState();
+function loadExamState() {
+  try {
+    const s = localStorage.getItem('yujian_exam');
+    if (s) return JSON.parse(s);
+  } catch(e) {}
+  return { currentIdx: 0, answers: {}, wrongList: [], subjectFilter: 'all' };
+}
+function saveExamState() {
+  localStorage.setItem('yujian_exam', JSON.stringify(examState));
+}
+
+function getFilteredQuestions() {
+  if (examState.subjectFilter === 'all') return EXAM_QUESTIONS;
+  return EXAM_QUESTIONS.filter(q => q.subject === examState.subjectFilter);
+}
+
+function renderQuestion() {
+  const filtered = getFilteredQuestions();
+  const container = document.getElementById('questionContainer');
+  const progress = document.getElementById('examProgress');
+  const accuracy = document.getElementById('examAccuracy');
+  if (filtered.length === 0) {
+    container.innerHTML = '<p style="text-align:center;color:var(--text3);padding:40px;">该科目暂无题目</p>';
+    progress.textContent = '0/0';
+    accuracy.textContent = '-';
+    return;
+  }
+  const total = filtered.length;
+  const answered = Object.keys(examState.answers).length;
+  const correctCount = Object.values(examState.answers).filter(a => a.correct).length;
+  progress.textContent = answered + '/' + total;
+  accuracy.textContent = answered > 0 ? Math.round(correctCount / answered * 100) + '%' : '-';
+  const q = filtered[examState.currentIdx % total];
+  const prevAnswer = examState.answers[q.id];
+  const answered_ = !!prevAnswer;
+  const isSingle = q.type === 'single';
+  container.innerHTML = '';
+
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  let html = '<span class="q-type ' + (isSingle ? 'single' : 'multi') + '">' + (isSingle ? '单选题' : '多选题') + '</span>';
+  html += '<span style="font-size:11px;color:var(--text3);margin-left:8px;">' + q.subject + ' · #' + q.id + '</span>';
+  html += '<div class="q-title">' + q.question + '</div>';
+  html += '<div class="option-list">';
+  const labels = isSingle ? ['A','B','C','D'] : ['A','B','C','D'];
+  q.options.forEach((opt, i) => {
+    let cls = 'option-item';
+    let disabled_ = answered_ ? ' disabled' : '';
+    if (answered_) {
+      if (isSingle) {
+        if (i === q.answer) cls += ' correct';
+        else if (i === prevAnswer.selected) cls += ' wrong';
+      } else {
+        if (q.answer.includes(i) && prevAnswer.selected.includes(i)) cls += ' correct';
+        else if (!q.answer.includes(i) && prevAnswer.selected.includes(i)) cls += ' wrong';
+        else if (q.answer.includes(i)) cls += ' correct';
+      }
+      cls += disabled_;
+    } else if (prevAnswer && prevAnswer.selected !== undefined && (isSingle ? prevAnswer.selected === i : prevAnswer.selected.includes(i))) {
+      cls += ' selected';
+    }
+    html += '<div class="' + cls + '" data-idx="' + i + '"><span class="option-letter">' + labels[i] + '</span>' + opt + '</div>';
+  });
+  html += '</div>';
+  html += '<div class="explanation-box' + (answered_ ? ' show' : '') + '" id="expBox"><span class="exp-title">' + (answered_ ? (prevAnswer.correct ? '✅ 回答正确' : '❌ 回答错误') : '') + '</span><br>' + q.explanation + '</div>';
+  html += '<div class="exam-actions">';
+  if (!answered_) {
+    html += '<button class="exam-btn primary" id="submitBtn">提交答案</button>';
+  }
+  html += '<button class="exam-btn" id="nextBtn">下一题 →</button>';
+  html += '</div>';
+
+  card.innerHTML = html;
+  container.appendChild(card);
+
+  // Option click handlers
+  if (!answered_) {
+    card.querySelectorAll('.option-item').forEach(el => {
+      el.addEventListener('click', e => {
+        const idx = parseInt(el.dataset.idx);
+        if (isSingle) {
+          card.querySelectorAll('.option-item').forEach(o => o.classList.remove('selected'));
+          el.classList.add('selected');
+          card._selected = idx;
+        } else {
+          el.classList.toggle('selected');
+          if (!card._selected) card._selected = [];
+          const arr = card._selected;
+          const pos = arr.indexOf(idx);
+          pos >= 0 ? arr.splice(pos, 1) : arr.push(idx);
+        }
+      });
+    });
+  }
+
+  // Submit button
+  const submitBtn = card.querySelector('#submitBtn');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', () => {
+      let selected;
+      if (isSingle) {
+        selected = card._selected;
+      } else {
+        selected = card._selected || [];
+      }
+      if (selected === undefined || (Array.isArray(selected) && selected.length === 0)) {
+        showToast('请先选择答案');
+        return;
+      }
+      let correct;
+      if (isSingle) {
+        correct = selected === q.answer;
+      } else {
+        const s = selected.sort().join(',');
+        const a = [...q.answer].sort().join(',');
+        correct = s === a;
+      }
+      examState.answers[q.id] = { selected: selected, correct: correct };
+      if (!correct) {
+        const exists = examState.wrongList.find(w => w.id === q.id);
+        if (!exists) examState.wrongList.push({ id: q.id, date: new Date().toISOString() });
+      }
+      saveExamState();
+      renderQuestion();
+    });
+  }
+
+  // Next button
+  card.querySelector('#nextBtn').addEventListener('click', () => {
+    examState.currentIdx = (examState.currentIdx + 1) % filtered.length;
+    saveExamState();
+    renderQuestion();
+  });
+}
+
+document.getElementById('subjectSelect').addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if (!btn) return;
+  document.querySelectorAll('#subjectSelect button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  examState.subjectFilter = btn.dataset.subject;
+  examState.currentIdx = 0;
+  saveExamState();
+  renderQuestion();
+});
+
+function showWrongBook() {
+  const container = document.getElementById('wrongBookContainer');
+  if (examState.wrongList.length === 0) {
+    container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text3);background:var(--surface);border-radius:12px;margin-top:16px;">🎉 暂无错题，继续加油！</div>';
+    return;
+  }
+  let html = '<h3>📋 错题本（' + examState.wrongList.length + '题）</h3><div class="law-list">';
+  examState.wrongList.slice().reverse().forEach(w => {
+    const q = EXAM_QUESTIONS.find(q_ => q_.id === w.id);
+    if (q) {
+      html += '<div class="law-item" style="cursor:pointer" onclick="jumpToQuestion(' + q.id + ')">';
+      html += '<span class="law-name" style="font-size:13px;">' + q.subject + ' #' + q.id + ': ' + q.question.substring(0, 40) + '...</span>';
+      html += '<span style="font-size:11px;color:var(--text3)">' + new Date(w.date).toLocaleDateString() + '</span>';
+      html += '</div>';
+    }
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function jumpToQuestion(id) {
+  switchTab('exam');
+  const filtered = getFilteredQuestions();
+  const idx = filtered.findIndex(q => q.id === id);
+  if (idx >= 0) {
+    examState.currentIdx = idx;
+    saveExamState();
+    renderQuestion();
+  }
+}
+
+function resetExam() {
+  if (confirm('确定要重置所有答题进度和错题记录吗？此操作不可恢复。')) {
+    examState = { currentIdx: 0, answers: {}, wrongList: [], subjectFilter: 'all' };
+    localStorage.removeItem('yujian_exam');
+    document.querySelectorAll('#subjectSelect button').forEach(b => b.classList.toggle('active', b.dataset.subject === 'all'));
+    renderQuestion();
+    document.getElementById('wrongBookContainer').innerHTML = '';
+    showToast('已重置');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// SECTION 5: Law Library Data & Render
+// ═══════════════════════════════════════════════════════
+const LAW_DB = [
+  // 宪法
+  { name:'中华人民共和国宪法', cat:'宪法', date:'1982-12-04', note:'2018修正', id:'const-1', summary:'国家根本大法，规定国家根本制度和根本任务。' },
+  { name:'中华人民共和国立法法', cat:'宪法', date:'2000-03-15', note:'2023修正', id:'const-2', summary:'规范立法活动，确立立法体制。' },
+  { name:'中华人民共和国全国人民代表大会组织法', cat:'宪法', date:'1982-12-10', note:'2021修正', id:'const-3', summary:'规定全国人大及其常委会的组织和活动原则。' },
+  { name:'中华人民共和国地方各级人民代表大会和地方各级人民政府组织法', cat:'宪法', date:'1979-07-01', note:'2022修正', id:'const-4', summary:'规定地方人大和政府组织制度。' },
+  { name:'中华人民共和国民族区域自治法', cat:'宪法', date:'1984-05-31', note:'2001修正', id:'const-5', summary:'实行民族区域自治制度的基本法律。' },
+  { name:'中华人民共和国香港特别行政区基本法', cat:'宪法', date:'1990-04-04', note:'', id:'const-6', summary:'香港特别行政区宪制性法律。' },
+  { name:'中华人民共和国澳门特别行政区基本法', cat:'宪法', date:'1993-03-31', note:'', id:'const-7', summary:'澳门特别行政区宪制性法律。' },
+  { name:'中华人民共和国国旗法', cat:'宪法', date:'1990-06-28', note:'2020修正', id:'const-8', summary:'规范国旗制作和使用。' },
+  { name:'中华人民共和国国徽法', cat:'宪法', date:'1991-03-02', note:'2020修正', id:'const-9', summary:'规范国徽制作和使用。' },
+  { name:'中华人民共和国国歌法', cat:'宪法', date:'2017-09-01', note:'', id:'const-10', summary:'规范国歌奏唱和使用。' },
+  // 民商法
+  { name:'中华人民共和国民法典', cat:'民商法', date:'2020-05-28', note:'', id:'civ-1', summary:'中国首部以"法典"命名的法律，共7编1260条。涵盖总则、物权、合同、人格权、婚姻家庭、继承、侵权责任。' },
+  { name:'中华人民共和国公司法', cat:'民商法', date:'1993-12-29', note:'2023修订', id:'civ-2', summary:'规范公司的组织和行为。2023修订版大幅调整注册资本制度和公司治理结构。' },
+  { name:'中华人民共和国合伙企业法', cat:'民商法', date:'1997-02-23', note:'2006修订', id:'civ-3', summary:'规范合伙企业的设立、经营和解散。' },
+  { name:'中华人民共和国个人独资企业法', cat:'民商法', date:'1999-08-30', note:'', id:'civ-4', summary:'规范个人独资企业组织形式。' },
+  { name:'中华人民共和国商标法', cat:'民商法', date:'1982-08-23', note:'2019修正', id:'civ-5', summary:'保护商标专用权，维护市场秩序。' },
+  { name:'中华人民共和国专利法', cat:'民商法', date:'1984-03-12', note:'2020修正', id:'civ-6', summary:'保护发明创造，促进技术创新。' },
+  { name:'中华人民共和国著作权法', cat:'民商法', date:'1990-09-07', note:'2020修正', id:'civ-7', summary:'保护文学、艺术和科学作品的著作权。' },
+  { name:'中华人民共和国消费者权益保护法', cat:'民商法', date:'1993-10-31', note:'2013修正', id:'civ-8', summary:'保护消费者合法权益，维护社会经济秩序。' },
+  { name:'中华人民共和国证券法', cat:'民商法', date:'1998-12-29', note:'2019修订', id:'civ-9', summary:'规范证券发行和交易行为。' },
+  { name:'中华人民共和国保险法', cat:'民商法', date:'1995-06-30', note:'2015修正', id:'civ-10', summary:'规范保险活动，保护保险活动当事人合法权益。' },
+  { name:'中华人民共和国企业破产法', cat:'民商法', date:'2006-08-27', note:'', id:'civ-11', summary:'规范企业破产程序，公平清理债权债务。' },
+  { name:'中华人民共和国电子商务法', cat:'民商法', date:'2018-08-31', note:'', id:'civ-12', summary:'规范电子商务行为，维护市场秩序。' },
+  // 刑法
+  { name:'中华人民共和国刑法', cat:'刑法', date:'1979-07-01', note:'2020修正（十一）', id:'crm-1', summary:'规定犯罪、刑罚及其适用规则。最新修正案增加多项新型犯罪。' },
+  { name:'中华人民共和国反有组织犯罪法', cat:'刑法', date:'2021-12-24', note:'', id:'crm-2', summary:'防范和惩治有组织犯罪。' },
+  { name:'中华人民共和国反电信网络诈骗法', cat:'刑法', date:'2022-09-02', note:'', id:'crm-3', summary:'预防、遏制和惩治电信网络诈骗。' },
+  { name:'中华人民共和国反洗钱法', cat:'刑法', date:'2006-10-31', note:'2024修订', id:'crm-4', summary:'预防洗钱活动，维护金融秩序。' },
+  { name:'中华人民共和国禁毒法', cat:'刑法', date:'2007-12-29', note:'', id:'crm-5', summary:'预防和惩治毒品违法犯罪行为。' },
+  { name:'中华人民共和国监狱法', cat:'刑法', date:'1994-12-29', note:'2012修正', id:'crm-6', summary:'规范监狱管理和罪犯改造。' },
+  // 行政法
+  { name:'中华人民共和国行政处罚法', cat:'行政法', date:'1996-03-17', note:'2021修订', id:'adm-1', summary:'规范行政处罚的设定和实施。2021年修订大幅完善处罚程序。' },
+  { name:'中华人民共和国行政许可法', cat:'行政法', date:'2003-08-27', note:'2019修正', id:'adm-2', summary:'规范行政许可的设定和实施。' },
+  { name:'中华人民共和国行政强制法', cat:'行政法', date:'2011-06-30', note:'', id:'adm-3', summary:'规范行政强制的设定和实施。' },
+  { name:'中华人民共和国治安管理处罚法', cat:'行政法', date:'2005-08-28', note:'2024修订', id:'adm-4', summary:'维护社会治安秩序，处罚违法行为。' },
+  { name:'中华人民共和国行政复议法', cat:'行政法', date:'1999-04-29', note:'2023修订', id:'adm-5', summary:'规范行政复议程序，保障公民合法权益。' },
+  { name:'中华人民共和国国家赔偿法', cat:'行政法', date:'1994-05-12', note:'2012修正', id:'adm-6', summary:'保障公民获得国家赔偿的权利。' },
+  { name:'中华人民共和国公务员法', cat:'行政法', date:'2005-04-27', note:'2018修订', id:'adm-7', summary:'规范公务员管理制度。' },
+  { name:'中华人民共和国政府信息公开条例', cat:'行政法', date:'2007-04-05', note:'2019修订', id:'adm-8', summary:'保障公民知情权，促进政府信息公开。' },
+  // 经济法
+  { name:'中华人民共和国反垄断法', cat:'经济法', date:'2007-08-30', note:'2022修正', id:'eco-1', summary:'预防和制止垄断行为，维护市场竞争。' },
+  { name:'中华人民共和国反不正当竞争法', cat:'经济法', date:'1993-09-02', note:'2019修正', id:'eco-2', summary:'维护公平竞争的市场秩序。' },
+  { name:'中华人民共和国税收征收管理法', cat:'经济法', date:'1992-09-04', note:'2015修正', id:'eco-3', summary:'规范税收征收管理活动。' },
+  { name:'中华人民共和国个人所得税法', cat:'经济法', date:'1980-09-10', note:'2018修正', id:'eco-4', summary:'规范个人所得税收制度。' },
+  { name:'中华人民共和国企业所得税法', cat:'经济法', date:'2007-03-16', note:'2018修正', id:'eco-5', summary:'规范企业所得税征收。' },
+  { name:'中华人民共和国产品质量法', cat:'经济法', date:'1993-02-22', note:'2018修正', id:'eco-6', summary:'规范产品质量监督和生产者责任。' },
+  { name:'中华人民共和国食品安全法', cat:'经济法', date:'2009-02-28', note:'2021修正', id:'eco-7', summary:'保障食品安全和消费者健康。' },
+  { name:'中华人民共和国环境保护法', cat:'经济法', date:'1989-12-26', note:'2014修订', id:'eco-8', summary:'保护和改善环境，防治污染。' },
+  // 社会法
+  { name:'中华人民共和国劳动法', cat:'社会法', date:'1994-07-05', note:'2018修正', id:'soc-1', summary:'调整劳动关系，保护劳动者权益。' },
+  { name:'中华人民共和国劳动合同法', cat:'社会法', date:'2007-06-29', note:'2012修正', id:'soc-2', summary:'规范劳动合同制度，构建和谐劳动关系。' },
+  { name:'中华人民共和国社会保险法', cat:'社会法', date:'2010-10-28', note:'2018修正', id:'soc-3', summary:'规范社会保险关系，维护公民社保权益。' },
+  { name:'中华人民共和国未成年人保护法', cat:'社会法', date:'1991-09-04', note:'2024修正', id:'soc-4', summary:'保护未成年人合法权益，促进全面发展。' },
+  { name:'中华人民共和国妇女权益保障法', cat:'社会法', date:'1992-04-03', note:'2022修订', id:'soc-5', summary:'保障妇女合法权益，促进男女平等。' },
+  { name:'中华人民共和国老年人权益保障法', cat:'社会法', date:'1996-08-29', note:'2018修正', id:'soc-6', summary:'保障老年人合法权益。' },
+  { name:'中华人民共和国残疾人保障法', cat:'社会法', date:'1990-12-28', note:'2018修正', id:'soc-7', summary:'保障残疾人合法权益。' },
+  { name:'中华人民共和国法律援助法', cat:'社会法', date:'2021-08-20', note:'', id:'soc-8', summary:'规范法律援助制度，保障困难群众获得法律服务。' },
+  // 程序法
+  { name:'中华人民共和国刑事诉讼法', cat:'程序法', date:'1979-07-01', note:'2018修正', id:'pro-1', summary:'保证刑法正确实施，惩罚犯罪、保护人民。' },
+  { name:'中华人民共和国民事诉讼法', cat:'程序法', date:'1991-04-09', note:'2023修正', id:'pro-2', summary:'保护当事人行使诉讼权利，保证法院正确审理民事案件。' },
+  { name:'中华人民共和国行政诉讼法', cat:'程序法', date:'1989-04-04', note:'2017修正', id:'pro-3', summary:'保证法院正确审理行政案件，保护公民合法权益。' },
+  { name:'中华人民共和国仲裁法', cat:'程序法', date:'1994-08-31', note:'2017修正', id:'pro-4', summary:'规范仲裁活动，公正及时解决民商事纠纷。' },
+  { name:'中华人民共和国人民调解法', cat:'程序法', date:'2010-08-28', note:'', id:'pro-5', summary:'规范人民调解工作，化解民间纠纷。' },
+  { name:'中华人民共和国海事诉讼特别程序法', cat:'程序法', date:'1999-12-25', note:'', id:'pro-6', summary:'规范海事诉讼特别程序。' },
+  // 国际法
+  { name:'中华人民共和国缔结条约程序法', cat:'国际法', date:'1990-12-28', note:'', id:'int-1', summary:'规范条约缔结程序。' },
+  { name:'中华人民共和国涉外民事关系法律适用法', cat:'国际法', date:'2010-10-28', note:'', id:'int-2', summary:'明确涉外民事关系法律适用规则。' },
+  { name:'中华人民共和国对外贸易法', cat:'国际法', date:'1994-05-12', note:'2022修正', id:'int-3', summary:'促进对外贸易发展，维护对外贸易秩序。' },
+  { name:'中华人民共和国海商法', cat:'国际法', date:'1992-11-07', note:'', id:'int-4', summary:'调整海上运输关系和船舶关系。' },
+  { name:'中华人民共和国外商投资法', cat:'国际法', date:'2019-03-15', note:'', id:'int-5', summary:'促进外商投资，保护外商投资合法权益。' },
+  { name:'中华人民共和国出口管制法', cat:'国际法', date:'2020-10-17', note:'', id:'int-6', summary:'规范出口管制制度。' },
+];
+
+let lawFilter = { cat:'all', search:'' };
+
+document.getElementById('lawCats').addEventListener('click', e => {
+  const btn = e.target.closest('.lib-cat');
+  if (!btn) return;
+  document.querySelectorAll('#lawCats .lib-cat').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  lawFilter.cat = btn.dataset.cat;
+  renderLawList();
+});
+
+function filterLaws() {
+  lawFilter.search = document.getElementById('lawSearch').value.trim().toLowerCase();
+  renderLawList();
+}
+
+function renderLawList() {
+  if (currentTab !== 'library') return;
+  const filtered = LAW_DB.filter(l => {
+    if (lawFilter.cat !== 'all' && l.cat !== lawFilter.cat) return false;
+    if (lawFilter.search && !l.name.includes(lawFilter.search)) return false;
+    return true;
+  });
+  document.getElementById('lawCount').textContent = '共 ' + filtered.length + ' 部法律';
+  const container = document.getElementById('lawList');
+  let html = '';
+  filtered.forEach(l => {
+    html += '<div class="law-item" onclick="openLawDetail(\'' + l.id + '\')">';
+    html += '<div><span class="law-name">' + l.name + '</span><br><span style="font-size:11px;color:var(--text3);">' + l.summary + '</span></div>';
+    html += '<div class="law-meta">' + l.date + (l.note ? ' · ' + l.note : '') + '</div>';
+    html += '</div>';
+  });
+  container.innerHTML = html || '<p style="text-align:center;color:var(--text3);padding:40px;">未找到匹配的法律</p>';
+}
+
+function openLawDetail(id) {
+  const law = LAW_DB.find(l => l.id === id);
+  if (!law) return;
+  const box = document.getElementById('lawDetailBox');
+  box.innerHTML = '<button class="close-detail" onclick="closeLawDetail()">✕</button>'
+    + '<h3>' + law.name + '</h3>'
+    + '<p class="law-info">类别：' + law.cat + ' | 颁布日期：' + law.date + (law.note ? ' | ' + law.note : '') + '</p>'
+    + '<div class="law-body"><p>' + law.summary + '</p>'
+    + '<p style="margin-top:12px;color:var(--text3);">📌 本平台提供法律基本信息查阅。完整条文请访问<a href="https://flk.npc.gov.cn" style="color:var(--primary);">国家法律法规数据库</a>。</p>'
+    + '</div>';
+  document.getElementById('lawDetailOverlay').classList.add('show');
+}
+
+function closeLawDetail(e) {
+  if (e && e.target !== document.getElementById('lawDetailOverlay')) return;
+  document.getElementById('lawDetailOverlay').classList.remove('show');
+}
+
+// ═══════════════════════════════════════════════════════
+// SECTION 6: Case Database
+// ═══════════════════════════════════════════════════════
+const CASE_DB = [
+  { id:'case-1', title:'于××诉××公司劳动争议纠纷案', cat:'民事', date:'2023', tags:'劳动维权 经济补偿 违法解除',
+    facts:'于某某在某公司工作8年后被公司以"不能胜任工作"为由单方面解除劳动合同。公司在解除前未安排培训或调整岗位。',
+    ruling:'法院认定公司违法解除劳动合同，判决支付赔偿金（2N），金额为于某某月工资×8年×2倍。',
+    refs:'《劳动合同法》第40条、第47条、第87条' },
+  { id:'case-2', title:'张××与李××民间借贷纠纷案', cat:'民事', date:'2024', tags:'民间借贷 利息 诉讼时效',
+    facts:'张某某借款20万元给李某某，约定年利率24%，借期2年。到期后李某某未还款，张某某在到期后3年内起诉。',
+    ruling:'法院支持了本金和约定利息（不超过LPR 4倍），因张某某在诉讼时效内起诉。',
+    refs:'《民法典》第188条、第680条；《最高人民法院关于审理民间借贷案件适用法律若干问题的规定》' },
+  { id:'case-3', title:'王×故意伤害案', cat:'刑事', date:'2023', tags:'故意伤害 正当防卫 防卫过当',
+    facts:'王某在深夜遭遇陌生男子闯入住宅，双方发生冲突。王某持刀捅刺造成对方重伤。公安机关以故意伤害罪移送审查起诉。',
+    ruling:'法院认定王某构成正当防卫但超过必要限度，属于防卫过当。判处有期徒刑1年，缓刑1年。',
+    refs:'《刑法》第20条、第234条' },
+  { id:'case-4', title:'李×诉××市公安局行政处罚案', cat:'行政', date:'2024', tags:'行政处罚 程序违法 撤销',
+    facts:'李某因涉嫌扰乱公共秩序被公安局处以行政拘留10日。公安局在作出处罚前未告知李某有陈述和申辩的权利。',
+    ruling:'法院以程序违法为由，撤销该行政处罚决定。',
+    refs:'《行政处罚法》第44条、第62条；《行政诉讼法》第70条' },
+  { id:'case-5', title:'××科技公司诉××侵犯专利权纠纷案', cat:'知识产权', date:'2022', tags:'专利侵权 损害赔偿 取证',
+    facts:'某公司发现竞争对手未经许可使用其发明专利制造销售产品，向法院起诉要求停止侵权并赔偿损失。',
+    ruling:'法院认定侵权成立，判令停止侵权并赔偿损失（按被告侵权获利×合理倍数计算）。',
+    refs:'《专利法》第65条、第71条' },
+  { id:'case-6', title:'赵××名誉权纠纷案', cat:'民事', date:'2024', tags:'名誉权 网络侵权 精神损害赔偿',
+    facts:'赵某某发现有人在社交媒体上发布严重侮辱性言论，对其名誉造成严重损害。向法院起诉要求删除内容、赔礼道歉并赔偿精神损失。',
+    ruling:'法院判决被告删除侵权内容、公开赔礼道歉，并赔偿精神损害抚慰金5万元。',
+    refs:'《民法典》第995条、第1024条、第1183条' },
+  { id:'case-7', title:'××污染企业环境公益诉讼案', cat:'民事', date:'2023', tags:'环境公益诉讼 损害赔偿 生态修复',
+    facts:'某化工企业长期违法排放超标废水，对下游河流生态造成严重破坏。检察院提起环境民事公益诉讼。',
+    ruling:'法院判决企业赔偿环境修复费用和生态服务功能损失费共计3000余万元。',
+    refs:'《环境保护法》第58条；《民事诉讼法》第55条' },
+  { id:'case-8', title:'指导案例18号：中兴通讯诉IDC案', cat:'指导案例', date:'2013', tags:'标准必要专利 FRAND 反垄断',
+    facts:'IDC公司持有通信标准必要专利，向中兴通讯提出不公平的高额许可费要求，并向美国法院申请禁令。',
+    ruling:'最高人民法院认定IDC违反FRAND承诺，构成滥用市场支配地位。为国内首例标准必要专利反垄断案。',
+    refs:'《反垄断法》第17条、第18条；FRAND原则' },
+  { id:'case-9', title:'指导案例64号：遗嘱赠与案', cat:'指导案例', date:'2016', tags:'遗赠 法定期间 接受遗赠',
+    facts:'被继承人在遗嘱中将房产赠与孙女。孙女得知赠与后，在两个月内通过通讯方式向其他继承人表示接受，但未书面通知。',
+    ruling:'法院认为，继承法规定的"知道受遗赠后两个月内"作出接受表示的形式不限于书面，口头或行为亦可。',
+    refs:'《民法典》第1124条（原《继承法》第25条）' },
+  { id:'case-10', title:'陈××诉××外卖平台劳动关系确认案', cat:'民事', date:'2023', tags:'劳动关系 平台用工 社保',
+    facts:'陈某某在某外卖平台连续送餐3年，平台将其定义为"众包骑手"拒不为陈某某缴纳社保。陈某某申请劳动仲裁确认劳动关系。',
+    ruling:'仲裁委认定双方存在劳动关系，因陈某某实际接受平台管理，工作属于平台主营业务。该裁决为平台用工劳动关系认定提供重要参考。',
+    refs:'《劳动合同法》第7条、第10条；《关于维护新就业形态劳动者劳动保障权益的指导意见》' },
+  { id:'case-11', title:'张某交通肇事逃逸案', cat:'刑事', date:'2022', tags:'交通肇事 逃逸 自首 量刑',
+    facts:'张某驾驶机动车与行人发生碰撞后驾车逃逸，致行人因未得到及时救治死亡。张某于次日到公安机关自首。',
+    ruling:'法院认定交通肇事（逃逸致人死亡）成立，鉴于自首及积极赔偿取得谅解，判处有期徒刑5年。',
+    refs:'《刑法》第133条、第67条' },
+  { id:'case-12', title:'XX市自然资源局行政不作为案', cat:'行政', date:'2024', tags:'行政不作为 信息公开 责令履职',
+    facts:'某公民向市自然资源局申请公开某地块审批信息，该局在法定期限内未作任何答复。',
+    ruling:'法院判决确认违法，责令该局限期作出答复。',
+    refs:'《政府信息公开条例》第33条；《行政诉讼法》第72条' },
+];
+
+let caseFilter = { cat:'all', search:'' };
+
+document.getElementById('caseCats').addEventListener('click', e => {
+  const btn = e.target.closest('.case-cat');
+  if (!btn) return;
+  document.querySelectorAll('#caseCats .case-cat').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  caseFilter.cat = btn.dataset.cat;
+  renderCaseList();
+});
+
+function filterCases() {
+  caseFilter.search = document.getElementById('caseSearch').value.trim().toLowerCase();
+  renderCaseList();
+}
+
+function renderCaseList() {
+  if (currentTab !== 'cases') return;
+  const filtered = CASE_DB.filter(c => {
+    if (caseFilter.cat !== 'all' && c.cat !== caseFilter.cat) return false;
+    if (caseFilter.search) {
+      const s = caseFilter.search;
+      if (!c.title.includes(s) && !c.tags.includes(s) && !c.facts.includes(s)) return false;
+    }
+    return true;
+  });
+  document.getElementById('caseCount').textContent = '共 ' + filtered.length + ' 个案例';
+  let html = '';
+  filtered.forEach(c => {
+    html += '<div class="case-item" onclick="openCaseDetail(\'' + c.id + '\')">';
+    html += '<div class="case-title">' + c.title + '</div>';
+    html += '<div class="case-meta"><span>' + c.cat + '</span><span>' + c.date + '</span><span>' + c.tags.replace(/\s/g, ' · ') + '</span></div>';
+    html += '</div>';
+  });
+  document.getElementById('caseList').innerHTML = html || '<p style="text-align:center;color:var(--text3);padding:40px;">未找到匹配的案例</p>';
+}
+
+function openCaseDetail(id) {
+  const c = CASE_DB.find(c_ => c_.id === id);
+  if (!c) return;
+  const box = document.getElementById('caseDetailBox');
+  box.innerHTML = '<button class="close-detail" onclick="closeCaseDetail()">✕</button>'
+    + '<h3>' + c.title + '</h3>'
+    + '<p style="font-size:12px;color:var(--text3);margin-bottom:12px;">' + c.cat + ' · ' + c.date + '</p>'
+    + '<div class="cd-section"><h4>📋 案情简介</h4><p>' + c.facts + '</p></div>'
+    + '<div class="cd-section"><h4>⚖️ 裁判结果</h4><p>' + c.ruling + '</p></div>'
+    + '<div class="cd-section"><h4>📖 法律依据</h4><p>' + c.refs + '</p></div>';
+  document.getElementById('caseDetailOverlay').classList.add('show');
+}
+
+function closeCaseDetail(e) {
+  if (e && e.target !== document.getElementById('caseDetailOverlay')) return;
+  document.getElementById('caseDetailOverlay').classList.remove('show');
+}
+
+// ═══════════════════════════════════════════════════════
+// SECTION 7: Tools
+// ═══════════════════════════════════════════════════════
+
+// Statute of Limitations
+function calcStatute() {
+  const result = document.getElementById('statuteResult');
+  const dateVal = document.getElementById('statuteDate').value;
+  const years = parseInt(document.getElementById('statuteType').value);
+  if (!dateVal) { result.innerHTML = '请选择日期'; result.classList.add('show'); return; }
+  const start = new Date(dateVal);
+  const end = new Date(start.setFullYear(start.getFullYear() + years));
+  const now = new Date();
+  const expired = end < now;
+  result.innerHTML = '诉讼时效届满日期：<strong>' + end.toLocaleDateString('zh-CN') + '</strong><br>'
+    + (expired ? '⚠️ <span style="color:var(--red);">时效已届满</span>' : '✅ 仍在时效内（剩余约' + Math.round((end - now) / (1000*60*60*24)) + '天）');
+  result.classList.add('show');
+}
+
+// Labor Compensation
+function calcCompensation() {
+  const result = document.getElementById('compensationResult');
+  const wage = parseFloat(document.getElementById('monthlyWage').value);
+  const years = parseFloat(document.getElementById('workYears').value);
+  const type = document.getElementById('dismissType').value;
+  if (!wage || !years) { result.innerHTML = '请填写完整信息'; result.classList.add('show'); return; }
+  const n = wage * Math.max(years, 0.5);
+  let total;
+  if (type === 'n') total = n;
+  else if (type === 'n1') total = n + wage;
+  else total = n * 2;
+  const cap = wage * 12;
+  const actual = Math.min(total, cap);
+  result.innerHTML = '估算经济补偿/赔偿金：<strong>' + actual.toLocaleString() + ' 元</strong><br>'
+    + '<small style="color:var(--text3);">月均工资=' + wage.toLocaleString() + ' · 年限=' + years + '年 · 类型=' + type + '<br>'
+    + (total > cap ? '⚠️ 已触发12个月封顶线（' + cap.toLocaleString() + '元）' : '') + '</small>';
+  result.classList.add('show');
+}
+
+// Loan Interest
+function calcLoanInterest() {
+  const result = document.getElementById('loanResult');
+  const principal = parseFloat(document.getElementById('loanPrincipal').value);
+  const months = parseInt(document.getElementById('loanMonths').value);
+  const rate = parseFloat(document.getElementById('loanRate').value);
+  if (!principal || !months || !rate) { result.innerHTML = '请填写完整信息'; result.classList.add('show'); return; }
+  const lpr4 = 14.8; // Approximate 4*LPR
+  const effectiveRate = Math.min(rate, lpr4);
+  const interest = principal * (effectiveRate / 100) * (months / 12);
+  const total = principal + interest;
+  result.innerHTML = '到期本息合计：<strong>' + total.toLocaleString() + ' 元</strong><br>'
+    + '<small style="color:var(--text3);">本金=' + principal.toLocaleString() + ' · 利息≈' + interest.toLocaleString() + '<br>'
+    + (rate > lpr4 ? '⚠️ 约定利率超LPR4倍（约' + lpr4 + '%），超出部分法院不予支持' : '✅ 约定利率在司法保护范围内') + '</small>';
+  result.classList.add('show');
+}
+
+// Court Fee
+function calcCourtFee() {
+  const result = document.getElementById('courtFeeResult');
+  const type = document.getElementById('caseType').value;
+  const amount = parseFloat(document.getElementById('claimAmount').value);
+  if (type === 'labor') { result.innerHTML = '劳动争议案件受理费：<strong>10 元</strong>（每件）'; result.classList.add('show'); return; }
+  if (type === 'divorce') { result.innerHTML = '离婚案件受理费：<strong>50 元 ~ 300 元/件</strong><br><small style="color:var(--text3);">涉及财产分割超过20万元部分按0.5%交纳</small>'; result.classList.add('show'); return; }
+  if (type === 'admin') { result.innerHTML = '行政案件受理费：<strong>50 元 ~ 100 元/件</strong>（商标/专利/海事100元）'; result.classList.add('show'); return; }
+  if (!amount) { result.innerHTML = '请输入标的金额'; result.classList.add('show'); return; }
+  let fee;
+  if (amount <= 10000) fee = 50;
+  else if (amount <= 100000) fee = amount * 0.025 - 200;
+  else if (amount <= 200000) fee = amount * 0.02 + 300;
+  else if (amount <= 500000) fee = amount * 0.015 + 1300;
+  else if (amount <= 1000000) fee = amount * 0.01 + 3800;
+  else if (amount <= 2000000) fee = amount * 0.009 + 4800;
+  else if (amount <= 5000000) fee = amount * 0.008 + 6800;
+  else if (amount <= 10000000) fee = amount * 0.007 + 11800;
+  else fee = amount * 0.005 + 21800;
+  result.innerHTML = '案件受理费估算：<strong>' + Math.round(fee).toLocaleString() + ' 元</strong><br>'
+    + '<small style="color:var(--text3);">此为基础受理费，不含保全费、鉴定费等</small>';
+  result.classList.add('show');
+}
+
+// Injury Compensation
+function calcInjury() {
+  const result = document.getElementById('injuryResult');
+  const level = parseInt(document.getElementById('injuryLevel').value);
+  const wageInput = document.getElementById('injuryWage').value;
+  const wage = parseFloat(wageInput) || 7000;
+  const factors = {10:7, 9:9, 8:11, 7:13, 6:16, 5:18, 1:27};
+  const months = factors[level] || 7;
+  const estimate = wage * months;
+  result.innerHTML = '工伤' + (level >= 5 ? level + '级' : level <= 4 ? '1-4级' : level + '级') + '一次性伤残补助金：<strong>≈ ' + estimate.toLocaleString() + ' 元</strong><br>'
+    + '<small style="color:var(--text3);">' + months + '个月 × ' + wage.toLocaleString() + '元/月<br>'
+    + '⚠️ 此为估算，实际以劳动能力鉴定结论为准<br>'
+    + '1-4级：保留劳动关系 · 5-6级：双方协商 · 7-10级：合同期满或职工提出可解除</small>';
+  result.classList.add('show');
+}
+
+// ═══════════════════════════════════════════════════════
+// SECTION 8: Scroll-to-top & Global
+// ═══════════════════════════════════════════════════════
+const mainContent = document.getElementById('mainContent');
+mainContent.addEventListener('scroll', () => {
+  document.getElementById('scrollTopBtn').classList.toggle('show', mainContent.scrollTop > 300);
+});
+
+// State persistence for tab
+function saveState() {
+  try { sessionStorage.setItem('yujian_tab', currentTab); } catch(e) {}
+}
+
+// Init on load
+(function init() {
+  try {
+    const saved = sessionStorage.getItem('yujian_tab');
+    if (saved) switchTab(saved);
+  } catch(e) {}
+  renderQuestion();
+})();
 </script>
+
 </body>
 </html>
