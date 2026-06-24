@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="郁见">
+<link rel="manifest" href="/luxury/manifest.json">
 <meta name="description" content="郁见 · 智能法律服务平台 — AI咨询·文书中心·法考题库·诉讼策略·知识图谱·律师匹配">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2259,6 +2260,11 @@ renderCaseList();
 renderQuestion();
 renderRegFeed();
 loadMediation();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/luxury/sw.js');
+}
 </script>
 </body>
 </html>

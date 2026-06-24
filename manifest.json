@@ -1,0 +1,26 @@
+{
+  "name": "郁见 · 智能法律服务平台",
+  "short_name": "郁见",
+  "start_url": "https://phillnarsoeer.github.io/luxury/yujian.html",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#faf6f0",
+  "theme_color": "#721c24",
+  "description": "郁见 · 智能法律服务平台 — AI咨询·文书中心·法考题库·诉讼策略·知识图谱·律师匹配",
+  "lang": "zh-CN",
+  "categories": ["utilities", "education"],
+  "icons": [
+    {
+      "src": "https://phillnarsoeer.github.io/luxury/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://phillnarsoeer.github.io/luxury/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
